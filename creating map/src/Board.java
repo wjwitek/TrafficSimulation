@@ -12,8 +12,8 @@ import javax.swing.event.MouseInputListener;
 
 public class Board extends JComponent implements MouseInputListener, ComponentListener {
     private static final long serialVersionUID = 1L;
-    private Point[][] points;
-    private int size = 10;
+    Point[][] points;
+    private int size = 24;
     public int editType=0;
 
     public Board(int length, int height) {
@@ -73,7 +73,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
             }
         }
 
-        int board = 1; //0 - nic, 1 - stadion, 2 - idk
+        int board = 0; //0 - nic, 1 - stadion, 2 - idk
         if(board == 1){
             int walls = 4;
             int ppl1 = 70;
@@ -185,8 +185,26 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
                 else if (points[x][y].type==2){
                     g.setColor(new Color(0.0f, 1.0f, 0.0f, 0.7f));
                 }
-                if (points[x][y].isPedestrian){
-                    g.setColor(new Color(0.0f, 0.0f, 1.0f, 0.7f));
+                else if (points[x][y].type==3){
+                    g.setColor(new Color(0.2f, 0.2f, 1.0f, 0.7f));
+                }
+                else if (points[x][y].type==4){
+                    g.setColor(new Color(0.2f, 0.2f, 0.2f, 0.7f));
+                }
+                else if (points[x][y].type==5){
+                    g.setColor(new Color(0.5f, 0.5f, 0.5f, 0.7f));
+                }
+                else if (points[x][y].type==6){
+                    g.setColor(new Color(0.0f, 0.5f, 0.8f, 0.7f));
+                }
+                else if (points[x][y].type==7){
+                    g.setColor(new Color(0.6f, 0.2f, 0.4f, 0.7f));
+                }
+                else if (points[x][y].type==8){
+                    g.setColor(new Color(0.8f, 0.2f, 0.0f, 0.7f));
+                }
+                else{
+                    g.setColor(new Color(0.0f, 0.0f, 0.0f, 0.7f));
                 }
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
             }
@@ -201,9 +219,9 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
             if(editType==3){
                 points[x][y].isPedestrian=true;
             }
-            else{
-                points[x][y].type= editType;
-            }
+//            else{
+            points[x][y].type= editType;
+//            }
             this.repaint();
         }
     }
@@ -221,9 +239,9 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
             if(editType==3){
                 points[x][y].isPedestrian=true;
             }
-            else{
-                points[x][y].type= editType;
-            }
+//            else{
+            points[x][y].type= editType;
+//            }
             this.repaint();
         }
     }

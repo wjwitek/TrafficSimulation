@@ -3,6 +3,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -75,16 +79,52 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         } else {
             String command = e.getActionCommand();
             if (command.equals("Start")) {
+                try {
+                    FileWriter myWriter = new FileWriter("table.txt");
+//                    StringBuilder S = new StringBuilder() ;
+                    String[][] S = new String[board.points.length][board.points[0].length];
+                    for(int j=0;j<board.points.length;j++){
+                        for(int i=0;i<board.points[0].length;i++){
+                            S[j][i] = String.valueOf(board.points[j][i].type);
+                        }
+                    }
+                    myWriter.write(Arrays.deepToString(S));
+                    myWriter.close();
+                    FileWriter myWriter2 = new FileWriter("table pow.txt");
+                    StringBuilder S2 = new StringBuilder() ;
+//                    String[][] S2 = new String[board.points.length][board.points[0].length];
+                    for(int j=0;j<board.points[0].length;j++){
+                        for(int i=0;i<board.points.length;i++){
+                            S2.append(String.valueOf(board.points[i][j].type));
+                        }
+                        S2.append("\n");
+                    }
+                    myWriter2.write(String.valueOf(S2));
+                    myWriter2.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+//                try {
+//                    if (myObj.createNewFile()) {
+//                        System.out.println("File created: " + myObj.getName());
+//                    } else {
+//                        System.out.println("File already exists.");
+//                    }
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+
                 if (!running) {
-                    timer.start();
+//                    timer.start();
                     start.setText("Pause");
                 } else {
-                    timer.stop();
+//                    timer.stop();
                     start.setText("Start");
                 }
                 running = !running;
                 clear.setEnabled(true);
-
+                System.exit(0);
             } else if (command.equals("clear")) {
                 iterNum = 0;
                 timer.stop();
