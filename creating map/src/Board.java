@@ -1,22 +1,23 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Random;
-
-import javax.swing.JComponent;
+import javax.swing.*;
 import javax.swing.event.MouseInputListener;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Serial;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class Board extends JComponent implements MouseInputListener {
     @Serial
     private static final long serialVersionUID = 1L;
     Point[][] points;
-    private int size;
+    private final int size;
     public int editType=0;
+    public int rectangleMode=0;
+    private Cords rectangleCorner;
 
     public Board(int length, int height, int squareSize) {
         size = squareSize;
@@ -57,7 +58,7 @@ public class Board extends JComponent implements MouseInputListener {
                 }
                 if(line.charAt(idx)==',')
                     x+=1;
-                if(line.charAt(idx)>='0' && line.charAt(idx)<='9') {
+                if(line.charAt(idx)>='0' && line.charAt(idx)<='9' &&(y<points.length && x<points[0].length)) {
                     points[y][x].type = line.charAt(idx)-48;
                 }
                 idx++;
@@ -118,6 +119,19 @@ public class Board extends JComponent implements MouseInputListener {
         int x = e.getX() / size;
         int y = e.getY() / size;
         if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
+            if(rectangleMode==2){
+                rectangleCorner = new Cords(x,y);
+                rectangleMode--;
+            }else if(rectangleMode==1){
+                Cords rectangleCorner2 = new Cords(x, y);
+                rectangleMode++;
+                for(int i = min(rectangleCorner.x, rectangleCorner2.x); i<=max(rectangleCorner.x, rectangleCorner2.x); i++){
+                    for(int j = min(rectangleCorner.y, rectangleCorner2.y); j<=max(rectangleCorner.y, rectangleCorner2.y); j++){
+                        points[i][j].type=editType;
+                    }
+                }
+            }
+
             points[x][y].type= editType;
             this.repaint();
         }

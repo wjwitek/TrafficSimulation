@@ -12,9 +12,12 @@ public class GUI extends JPanel implements ActionListener {
     private static final long serialVersionUID = 1L;
     private Board board;
     private JComboBox<Integer> drawType;
+    JButton rectangle;
+    int squareSize;
 
-    public GUI(JFrame jf) {
+    public GUI(JFrame jf, int squareSize) {
         jf.setResizable(false);
+        this.squareSize = squareSize;
     }
 
     public void initialize(Container container) {
@@ -27,20 +30,24 @@ public class GUI extends JPanel implements ActionListener {
         save.setActionCommand("Save");
         save.addActionListener(this);
 
+        rectangle = new JButton("Rectangle Mode On");
+        rectangle.setActionCommand("Rectangle");
+        rectangle.addActionListener(this);
+
         JButton clear = new JButton("Clear");
         clear.setActionCommand("Clear");
         clear.addActionListener(this);
 
-        drawType = new JComboBox<Integer>(Point.types);
+        drawType = new JComboBox<>(Point.types);
         drawType.addActionListener(this);
         drawType.setActionCommand("drawType");
 
         buttonPanel.add(save);
+        buttonPanel.add(rectangle);
         buttonPanel.add(drawType);
         buttonPanel.add(clear);
 
-
-        board = new Board(1024, 768 - buttonPanel.getHeight(), 24);
+        board = new Board(1024, 768 - buttonPanel.getHeight(), squareSize);
         container.add(board, BorderLayout.CENTER);
         container.add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -50,36 +57,42 @@ public class GUI extends JPanel implements ActionListener {
         switch (command) {
             case "Save" -> {
                 try {
-                    FileWriter myWriter = new FileWriter("table.txt");
-//                    StringBuilder S = new StringBuilder() ;
+                    FileWriter table = new FileWriter("table.txt");
                     String[][] S = new String[board.points.length][board.points[0].length];
                     for (int j = 0; j < board.points.length; j++) {
                         for (int i = 0; i < board.points[0].length; i++) {
                             S[j][i] = String.valueOf(board.points[j][i].type);
                         }
                     }
-                    myWriter.write(Arrays.deepToString(S));
-                    myWriter.close();
-                    FileWriter myWriter2 = new FileWriter("table pow.txt");
-                    StringBuilder S2 = new StringBuilder();
-//                    String[][] S2 = new String[board.points.length][board.points[0].length];
+                    table.write(Arrays.deepToString(S));
+                    table.close();
+                    FileWriter table_pow = new FileWriter("table pow.txt");
+                    StringBuilder SB = new StringBuilder();
                     for (int j = 0; j < board.points[0].length; j++) {
                         for (int i = 0; i < board.points.length; i++) {
-                            S2.append(String.valueOf(board.points[i][j].type));
+                            SB.append(board.points[i][j].type);
                         }
-                        S2.append("\n");
+                        SB.append("\n");
                     }
-                    myWriter2.write(String.valueOf(S2));
-                    myWriter2.close();
+                    table_pow.write(String.valueOf(SB));
+                    table_pow.close();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
                 System.exit(0);
             }
-            case "drawType" -> {
-                board.editType = (int) (Integer) drawType.getSelectedItem();
-            }
+            case "drawType" -> board.editType = (int) (Integer) drawType.getSelectedItem();
             case "Clear" -> board.clear();
+            case "Rectangle" -> {
+                if(board.rectangleMode==0) {
+                    board.rectangleMode = 2;
+                    rectangle.setText("Rectangle Mode Off");
+                }
+                else if(board.rectangleMode==2) {
+                    board.rectangleMode = 0;
+                    rectangle.setText("Rectangle Mode On");
+                }
+            }
         }
     }
 }
