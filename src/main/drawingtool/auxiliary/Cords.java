@@ -1,3 +1,5 @@
+package main.drawingtool.auxiliary;
+
 public class Cords {
     public int x,y;
     public Cords(int x, int y){

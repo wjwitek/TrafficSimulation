@@ -1,3 +1,7 @@
+package main.drawingtool;
+
+import main.drawingtool.auxiliary.GUI;
+
 import javax.swing.JFrame;
 import java.io.Serial;
 

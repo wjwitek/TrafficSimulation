@@ -1,3 +1,5 @@
+package main.drawingtool.auxiliary;
+
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
@@ -46,7 +48,7 @@ public class Board extends JComponent implements MouseInputListener {
             for (int y = 0; y < points[x].length; ++y)
                 points[x][y] = new Point();
 
-        FileReader filereader = new FileReader("table.txt");
+        FileReader filereader = new FileReader("src/main/drawingtool/resources/table.txt");
         BufferedReader bufferedreader = new BufferedReader(filereader);
         String line = bufferedreader.readLine();
         while (line != null) {

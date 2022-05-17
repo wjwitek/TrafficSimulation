@@ -1,3 +1,6 @@
+package main.drawingtool.auxiliary;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -57,7 +60,7 @@ public class GUI extends JPanel implements ActionListener {
         switch (command) {
             case "Save" -> {
                 try {
-                    FileWriter table = new FileWriter("table.txt");
+                    FileWriter table = new FileWriter("src/main/drawingtool/resources/table.txt");
                     String[][] S = new String[board.points.length][board.points[0].length];
                     for (int j = 0; j < board.points.length; j++) {
                         for (int i = 0; i < board.points[0].length; i++) {
@@ -66,7 +69,7 @@ public class GUI extends JPanel implements ActionListener {
                     }
                     table.write(Arrays.deepToString(S));
                     table.close();
-                    FileWriter table_pow = new FileWriter("table pow.txt");
+                    FileWriter table_pow = new FileWriter("src/main/drawingtool/resources/table pow.txt");
                     StringBuilder SB = new StringBuilder();
                     for (int j = 0; j < board.points[0].length; j++) {
                         for (int i = 0; i < board.points.length; i++) {
