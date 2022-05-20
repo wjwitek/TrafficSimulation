@@ -17,7 +17,7 @@ public class Program extends JFrame {
         setTitle("Drawing field");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GUI gof = new GUI(this, 24);
+        GUI gof = new GUI(this, 20);
         gof.initialize(this.getContentPane());
         this.setSize(1024, 768);
         this.setVisible(true);

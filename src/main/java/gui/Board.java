@@ -105,9 +105,9 @@ public class Board extends JComponent{
                     case crossing -> g.setColor(new Color(0.6f, 0.6f, 0.6f, 0.7f));
                     case unavailable -> g.setColor(new Color(0.0f, 0.0f, 0.0f, 1.0f));
                     case underground -> g.setColor(new Color(0.7f, 0.0f, 0.7f, 0.7f));
-//                    case 6 -> g.setColor(new Color(0.0f, 0.5f, 0.8f, 0.7f));
-//                    case 7 -> g.setColor(new Color(0.6f, 0.2f, 0.4f, 0.7f));
-//                    case 8 -> g.setColor(new Color(0.8f, 0.2f, 0.0f, 0.7f));
+                    case underground_street -> g.setColor(new Color(0.3f, 0.3f, 0.3f, 0.4f));
+                    case underground_unavailable -> g.setColor(new Color(0.0f, 0.0f, 0.0f, 0.4f));
+                    case underground_pavement -> g.setColor(new Color(0.2f, 0.8f, 0.2f, 0.4f));
                     default -> g.setColor(new Color(1.0f, 0.0f, 0.0f, 0.7f));
                 }
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
