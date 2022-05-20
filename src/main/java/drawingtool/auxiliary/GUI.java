@@ -1,4 +1,4 @@
-package main.drawingtool.auxiliary;
+package main.java.drawingtool.auxiliary;
 
 
 import javax.swing.*;
@@ -14,7 +14,7 @@ public class GUI extends JPanel implements ActionListener {
     @Serial
     private static final long serialVersionUID = 1L;
     private Board board;
-    private JComboBox<Integer> drawType;
+    private JComboBox<Subsoil> drawType;
     JButton rectangle;
     int squareSize;
 
@@ -41,7 +41,7 @@ public class GUI extends JPanel implements ActionListener {
         clear.setActionCommand("Clear");
         clear.addActionListener(this);
 
-        drawType = new JComboBox<>(Point.types);
+        drawType = new JComboBox<>(Subsoil.values());
         drawType.addActionListener(this);
         drawType.setActionCommand("drawType");
 
@@ -60,20 +60,21 @@ public class GUI extends JPanel implements ActionListener {
         switch (command) {
             case "Save" -> {
                 try {
-                    FileWriter table = new FileWriter("src/main/drawingtool/resources/table.txt");
+                    FileWriter table = new FileWriter("src/main/resources/table.txt");
                     String[][] S = new String[board.points.length][board.points[0].length];
                     for (int j = 0; j < board.points.length; j++) {
                         for (int i = 0; i < board.points[0].length; i++) {
-                            S[j][i] = String.valueOf(board.points[j][i].type);
+                            S[j][i] = String.valueOf(board.points[j][i].type.toInt());
                         }
                     }
                     table.write(Arrays.deepToString(S));
                     table.close();
-                    FileWriter table_pow = new FileWriter("src/main/drawingtool/resources/table pow.txt");
+
+                    FileWriter table_pow = new FileWriter("src/main/resources/table pow.txt");
                     StringBuilder SB = new StringBuilder();
                     for (int j = 0; j < board.points[0].length; j++) {
                         for (int i = 0; i < board.points.length; i++) {
-                            SB.append(board.points[i][j].type);
+                            SB.append(board.points[i][j].type.toInt());
                         }
                         SB.append("\n");
                     }
@@ -84,7 +85,7 @@ public class GUI extends JPanel implements ActionListener {
                 }
                 System.exit(0);
             }
-            case "drawType" -> board.editType = (int) (Integer) drawType.getSelectedItem();
+            case "drawType" -> board.editType = (Subsoil) drawType.getSelectedItem();
             case "Clear" -> board.clear();
             case "Rectangle" -> {
                 if(board.rectangleMode==0) {

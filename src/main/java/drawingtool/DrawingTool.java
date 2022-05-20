@@ -1,23 +1,23 @@
-package main.drawingtool;
+package main.java.drawingtool;
 
-import main.drawingtool.auxiliary.GUI;
+import main.java.drawingtool.auxiliary.GUI;
 
 import javax.swing.JFrame;
 import java.io.Serial;
 
-public class Program extends JFrame {
+public class DrawingTool extends JFrame {
     @Serial
     private static final long serialVersionUID = 1L;
 
     public static void main(String[] args) {
-        new Program();
+        new DrawingTool();
     }
 
-    public Program() {
+    public DrawingTool() {
         setTitle("Drawing field");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        GUI gof = new GUI(this, 24);
+        GUI gof = new GUI(this, 16);
         gof.initialize(this.getContentPane());
         this.setSize(1024, 768);
         this.setVisible(true);

@@ -1,4 +1,6 @@
-import gui.*;
+package main.java;
+
+import main.java.gui.*;
 
 import javax.swing.JFrame;
 import java.io.Serial;

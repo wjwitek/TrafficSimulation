@@ -1,4 +1,4 @@
-package main.drawingtool.auxiliary;
+package main.java.drawingtool.auxiliary;
 
 public class Cords {
     public int x,y;

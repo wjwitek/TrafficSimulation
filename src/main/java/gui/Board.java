@@ -1,4 +1,7 @@
-package gui;
+package main.java.gui;
+
+import main.java.drawingtool.auxiliary.Subsoil;
+import main.java.drawingtool.auxiliary.Point;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
@@ -57,7 +60,7 @@ public class Board extends JComponent{
                 if(line.charAt(idx)==',')
                     x+=1;
                 if(line.charAt(idx)>='0' && line.charAt(idx)<='9' &&(y<points.length && x<points[0].length)) {
-                    points[y][x].type = line.charAt(idx)-48;
+                    points[y][x].type = Subsoil.fromInt(line.charAt(idx)-48);
                 }
                 idx++;
             }
@@ -96,16 +99,16 @@ public class Board extends JComponent{
         for (x = 1; x < points.length-1; ++x) {
             for (y = 1; y < points[x].length-1; ++y) {
                 switch (points[x][y].type) {
-                    case 0 -> g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-                    case 1 -> g.setColor(new Color(1.0f, 0.0f, 0.0f, 0.7f));
-                    case 2 -> g.setColor(new Color(0.0f, 1.0f, 0.0f, 0.7f));
-                    case 3 -> g.setColor(new Color(0.2f, 0.2f, 1.0f, 0.7f));
-                    case 4 -> g.setColor(new Color(0.2f, 0.2f, 0.2f, 0.7f));
-                    case 5 -> g.setColor(new Color(0.5f, 0.5f, 0.5f, 0.7f));
-                    case 6 -> g.setColor(new Color(0.0f, 0.5f, 0.8f, 0.7f));
-                    case 7 -> g.setColor(new Color(0.6f, 0.2f, 0.4f, 0.7f));
-                    case 8 -> g.setColor(new Color(0.8f, 0.2f, 0.0f, 0.7f));
-                    default -> g.setColor(new Color(0.0f, 0.0f, 0.0f, 0.7f));
+                    case empty -> g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
+                    case street -> g.setColor(new Color(0.3f, 0.3f, 0.3f, 0.7f));
+                    case pavement -> g.setColor(new Color(0.2f, 0.8f, 0.2f, 0.7f));
+                    case crossing -> g.setColor(new Color(0.6f, 0.6f, 0.6f, 0.7f));
+                    case unavailable -> g.setColor(new Color(0.0f, 0.0f, 0.0f, 1.0f));
+                    case underground -> g.setColor(new Color(0.7f, 0.0f, 0.7f, 0.7f));
+//                    case 6 -> g.setColor(new Color(0.0f, 0.5f, 0.8f, 0.7f));
+//                    case 7 -> g.setColor(new Color(0.6f, 0.2f, 0.4f, 0.7f));
+//                    case 8 -> g.setColor(new Color(0.8f, 0.2f, 0.0f, 0.7f));
+                    default -> g.setColor(new Color(1.0f, 0.0f, 0.0f, 0.7f));
                 }
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
             }
