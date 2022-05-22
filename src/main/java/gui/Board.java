@@ -1,9 +1,5 @@
 package main.java.gui;
 
-import main.java.gui.Cords;
-import main.java.gui.Point;
-import main.java.gui.Subsoil;
-
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;

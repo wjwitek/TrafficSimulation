@@ -7,11 +7,12 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serial;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GUI extends JPanel implements ActionListener, ChangeListener {
     @Serial
@@ -25,20 +26,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     private Container container;
     private boolean mode = false;
     private JPanel buttonPanel;
-
-    // normal mode buttons
-    private JButton startStopSimulation;
     private JSlider simulationSpeed;
-    private JButton restart;
-    private JButton switchMode;
-    private JButton newSource;
     private JFileChooser mapSource;
 
-    // drawing tool buttons
-    private JButton save;
-    JButton rectangle;
-    private JButton clear;
     private JComboBox<Subsoil> drawType;
+    Map<ButtonNames, JButton> buttons = new HashMap<>();
 
 
     public GUI(JFrame jf, int squareSize) {
@@ -54,12 +46,22 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         this.container.setLayout(new BorderLayout());
         this.container.setSize(new Dimension(1024, 768));
 
-        // initialize normal mode buttons
         buttonPanel = new JPanel();
 
-        startStopSimulation = new JButton("Start");
-        startStopSimulation.setActionCommand("Start");
-        startStopSimulation.addActionListener(this);
+        // initialize normal mode buttons
+        JButton startStopSimulation = initButton("Start", "Start", ButtonNames.StartStopSimulation);
+        JButton switchMode= initButton("Drawing tool", "Switch mode", ButtonNames.SwitchMode);
+        JButton restart = initButton("Restart", "Restart", ButtonNames.Restart);
+        JButton newSource = initButton("Open map", "Open", ButtonNames.NewSource);
+
+        // initialize drawing tool buttons
+        JButton save = initButton("Save", "Save", ButtonNames.Save);
+        JButton rectangle = initButton("Rectangle Mode On", "Rectangle", ButtonNames.Rectangle);
+        JButton clear = initButton("Clear", "Clear", ButtonNames.Clear);
+
+        drawType = new JComboBox<>(Subsoil.values());
+        drawType.addActionListener(this);
+        drawType.setActionCommand("drawType");
 
         simulationSpeed = new JSlider();
         simulationSpeed.setMinimum(0);
@@ -67,17 +69,6 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         simulationSpeed.addChangeListener(this);
         simulationSpeed.setValue(maxDelay - timer.getDelay());
 
-        switchMode= new JButton("Drawing Tool");
-        switchMode.setActionCommand("Switch mode");
-        switchMode.addActionListener(this);
-
-        restart = new JButton("Restart");
-        restart.setActionCommand("Restart");
-        restart.addActionListener(this);
-
-        newSource = new JButton("Open map");
-        newSource.setActionCommand("Open");
-        newSource.addActionListener(this);
         mapSource = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
         buttonPanel.add(newSource);
@@ -93,47 +84,32 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
     public void changeButtonsToDrawingTool(){
         // remove old buttons
-        buttonPanel.remove(startStopSimulation);
+        buttonPanel.remove(buttons.get(ButtonNames.StartStopSimulation));
         buttonPanel.remove(simulationSpeed);
-        buttonPanel.remove(restart);
-        buttonPanel.remove(switchMode);
+        buttonPanel.remove(buttons.get(ButtonNames.Restart));
+        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
 
-        save = new JButton("Save");
-        save.setActionCommand("Save");
-        save.addActionListener(this);
-
-        rectangle = new JButton("Rectangle Mode On");
-        rectangle.setActionCommand("Rectangle");
-        rectangle.addActionListener(this);
-
-        clear = new JButton("Clear");
-        clear.setActionCommand("Clear");
-        clear.addActionListener(this);
-
-        drawType = new JComboBox<>(Subsoil.values());
-        drawType.addActionListener(this);
-        drawType.setActionCommand("drawType");
-
-        buttonPanel.add(save);
-        buttonPanel.add(rectangle);
+        // add new buttons
+        buttonPanel.add(buttons.get(ButtonNames.Save));
+        buttonPanel.add(buttons.get(ButtonNames.Rectangle));
         buttonPanel.add(drawType);
-        buttonPanel.add(clear);
-        buttonPanel.add(switchMode);
+        buttonPanel.add(buttons.get(ButtonNames.Clear));
+        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
     }
 
     public void changeToNormalMode(){
         // remove drawing tool buttons
-        buttonPanel.remove(save);
-        buttonPanel.remove(rectangle);
+        buttonPanel.remove(buttons.get(ButtonNames.Save));
+        buttonPanel.remove(buttons.get(ButtonNames.Rectangle));
         buttonPanel.remove(drawType);
-        buttonPanel.remove(clear);
-        buttonPanel.remove(switchMode);
+        buttonPanel.remove(buttons.get(ButtonNames.Clear));
+        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
 
         // add normal mode buttons
-        buttonPanel.add(startStopSimulation);
+        buttonPanel.add(buttons.get(ButtonNames.StartStopSimulation));
         buttonPanel.add(simulationSpeed);
-        buttonPanel.add(restart);
-        buttonPanel.add(switchMode);
+        buttonPanel.add(buttons.get(ButtonNames.Restart));
+        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -147,22 +123,16 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
             switch (command) {
                 case "Start" -> {
                     timer.start();
-                    startStopSimulation.setText("Stop");
-                    startStopSimulation.setActionCommand("Stop");
+                    buttons.get(ButtonNames.StartStopSimulation).setText("Stop");
+                    buttons.get(ButtonNames.StartStopSimulation).setActionCommand("Stop");
                 }
                 case "Stop" -> {
                     timer.stop();
-                    startStopSimulation.setText("Start");
-                    startStopSimulation.setActionCommand("Start");
+                    buttons.get(ButtonNames.StartStopSimulation).setText("Start");
+                    buttons.get(ButtonNames.StartStopSimulation).setActionCommand("Start");
                 }
                 case "Restart" -> {
-                    timer.stop();
-                    startStopSimulation.setText("Start");
-                    startStopSimulation.setActionCommand("Start");
-                    System.out.println("Restarting simulation");
-                    // TODO actually restart simulation
-                    iterNum = 0;
-                    frame.setTitle("Traffic simulation, iteration: " + iterNum);
+                    restartSimulation();
                 }
                 case "Switch mode" -> {
                     mode = !mode;
@@ -170,11 +140,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                     System.out.println(mode);
                     if (mode){
                         timer.stop();
-                        switchMode.setText("Normal mode");
+                        buttons.get(ButtonNames.SwitchMode).setText("Normal mode");
                         changeButtonsToDrawingTool();
                     }
                     else{
-                        switchMode.setText("Drawing tool");
+                        buttons.get(ButtonNames.SwitchMode).setText("Drawing tool");
                         changeToNormalMode();
                     }
                     container.revalidate();
@@ -183,42 +153,18 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
                 }
                 case "Save" -> {
-                    try {
-                        FileWriter table = new FileWriter("src/main/resources/table.txt");
-                        String[][] S = new String[board.points.length][board.points[0].length];
-                        for (int j = 0; j < board.points.length; j++) {
-                            for (int i = 0; i < board.points[0].length; i++) {
-                                S[j][i] = String.valueOf(board.points[j][i].type.toInt());
-                            }
-                        }
-                        table.write(Arrays.deepToString(S));
-                        table.close();
-
-                        FileWriter table_pow = new FileWriter("src/main/resources/table pow.txt");
-                        StringBuilder SB = new StringBuilder();
-                        for (int j = 0; j < board.points[0].length; j++) {
-                            for (int i = 0; i < board.points.length; i++) {
-                                SB.append(board.points[i][j].type.toInt());
-                            }
-                            SB.append("\n");
-                        }
-                        table_pow.write(String.valueOf(SB));
-                        table_pow.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    System.exit(0);
+                    saveMap();
                 }
                 case "drawType" -> board.editType = (Subsoil) drawType.getSelectedItem();
                 case "Clear" -> board.clear();
                 case "Rectangle" -> {
                     if(board.rectangleMode==0) {
                         board.rectangleMode = 2;
-                        rectangle.setText("Rectangle Mode Off");
+                        buttons.get(ButtonNames.Rectangle).setText("Rectangle Mode Off");
                     }
                     else if(board.rectangleMode==2) {
                         board.rectangleMode = 0;
-                        rectangle.setText("Rectangle Mode On");
+                        buttons.get(ButtonNames.Rectangle).setText("Rectangle Mode On");
                     }
                 }
                 case "Open" -> {
@@ -239,5 +185,52 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
     public void stateChanged(ChangeEvent a){
         timer.setDelay(maxDelay - simulationSpeed.getValue());
+    }
+
+    private JButton initButton(String text, String command, ButtonNames key){
+        JButton button = new JButton(text);
+        button.setActionCommand(command);
+        button.addActionListener(this);
+        buttons.put(key, button);
+        return button;
+    }
+
+    private void restartSimulation(){
+        timer.stop();
+        buttons.get(ButtonNames.StartStopSimulation).setText("Start");
+        buttons.get(ButtonNames.StartStopSimulation).setActionCommand("Start");
+        System.out.println("Restarting simulation");
+        // TODO actually restart simulation
+        iterNum = 0;
+        frame.setTitle("Traffic simulation, iteration: " + iterNum);
+    }
+
+    private void saveMap(){
+        // TODO save map to custom filename, not always the same
+        try {
+            FileWriter table = new FileWriter("src/main/resources/table.txt");
+            String[][] S = new String[board.points.length][board.points[0].length];
+            for (int j = 0; j < board.points.length; j++) {
+                for (int i = 0; i < board.points[0].length; i++) {
+                    S[j][i] = String.valueOf(board.points[j][i].type.toInt());
+                }
+            }
+            table.write(Arrays.deepToString(S));
+            table.close();
+
+            FileWriter table_pow = new FileWriter("src/main/resources/table pow.txt");
+            StringBuilder SB = new StringBuilder();
+            for (int j = 0; j < board.points[0].length; j++) {
+                for (int i = 0; i < board.points.length; i++) {
+                    SB.append(board.points[i][j].type.toInt());
+                }
+                SB.append("\n");
+            }
+            table_pow.write(String.valueOf(SB));
+            table_pow.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        System.exit(0);
     }
 }
