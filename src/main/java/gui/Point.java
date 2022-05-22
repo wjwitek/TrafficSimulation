@@ -1,4 +1,4 @@
-package main.java.drawingtool.auxiliary;
+package main.java.gui;
 
 public class Point {
     public Subsoil type;

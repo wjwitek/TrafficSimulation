@@ -1,4 +1,4 @@
-package main.java.drawingtool.auxiliary;
+package main.java.gui;
 
 public enum Subsoil {
     empty       (0),
@@ -13,7 +13,7 @@ public enum Subsoil {
     lights      (6);
 
     private final int intValue;
-    Subsoil (int x){
+    Subsoil(int x){
         intValue = x;
     }
     public int toInt(){
