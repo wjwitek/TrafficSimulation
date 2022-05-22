@@ -1,7 +1,8 @@
 package main.java.gui;
 
-import main.java.drawingtool.auxiliary.Subsoil;
-import main.java.drawingtool.auxiliary.Point;
+import main.java.gui.Cords;
+import main.java.gui.Point;
+import main.java.gui.Subsoil;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
@@ -15,19 +16,24 @@ import java.io.Serial;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class Board extends JComponent{
+public class Board extends JComponent implements MouseInputListener {
     @Serial
     private static final long serialVersionUID = 1L;
     Point[][] points;
     private final int size;
-    final String mapSource = "src/main/resources/table.txt";
+    public Subsoil editType= Subsoil.empty;
+    public int rectangleMode=0;
+    private Cords rectangleCorner;
+    public boolean mode = false;
 
-    public Board(int length, int height, int squareSize) {
+    public Board(int length, int height, int squareSize, String mapSource) {
         size = squareSize;
+        addMouseListener(this);
+        addMouseMotionListener(this);
         setBackground(Color.WHITE);
         setOpaque(true);
         try {
-            initialize((length / size) + 1, (height / size) + 1);
+            initialize((length / size) + 1, (height / size) + 1, mapSource);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -41,7 +47,7 @@ public class Board extends JComponent{
         this.repaint();
     }
 
-    private void initialize(int length, int height) throws IOException {
+    public void initialize(int length, int height, String mapSource) throws IOException {
         points = new Point[length][height];
         for (int x = 0; x < points.length; ++x)
             for (int y = 0; y < points[x].length; ++y)
@@ -67,7 +73,6 @@ public class Board extends JComponent{
             line = bufferedreader.readLine();
         }
     }
-
     protected void paintComponent(Graphics g) {
         if (isOpaque()) {
             g.setColor(getBackground());
@@ -115,9 +120,50 @@ public class Board extends JComponent{
         }
 
     }
+
+    public void mouseClicked(MouseEvent e) {
+        if (mode){
+            int x = e.getX() / size;
+            int y = e.getY() / size;
+            if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
+                if(rectangleMode==2){
+                    rectangleCorner = new Cords(x,y);
+                    rectangleMode--;
+                }else if(rectangleMode==1){
+                    Cords rectangleCorner2 = new Cords(x, y);
+                    rectangleMode++;
+                    for(int i = min(rectangleCorner.x, rectangleCorner2.x); i<=max(rectangleCorner.x, rectangleCorner2.x); i++){
+                        for(int j = min(rectangleCorner.y, rectangleCorner2.y); j<=max(rectangleCorner.y, rectangleCorner2.y); j++){
+                            points[i][j].type=editType;
+                        }
+                    }
+                }
+
+                points[x][y].type= editType;
+                this.repaint();
+            }
+        }
+    }
+
+    public void mouseDragged(MouseEvent e) {
+        if (mode){
+            int x = e.getX() / size;
+            int y = e.getY() / size;
+            if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
+                points[x][y].type= editType;
+                this.repaint();
+            }
+        }
+    }
+
+    public void mouseExited(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseMoved(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {}
+
     public void iteration(){
         // TODO
         System.out.println("Something happens in simulation.");
     }
-
 }
