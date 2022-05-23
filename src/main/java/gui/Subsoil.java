@@ -64,8 +64,6 @@ public enum Subsoil {
             case streetW -> new Color(0.3f, 0.3f, 0.3f, 0.9f);
             case lights_cars -> new Color(0.8f, 0.0f, 0.0f, 0.7f);
             case lights -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
-
-            default -> new Color(1.0f, 0.0f, 0.0f, 0.7f);
         };
     }
 }

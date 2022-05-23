@@ -23,7 +23,6 @@ public class Board extends JComponent implements MouseInputListener {
     public int rectangleMode = 0, length, height;
     private Cords rectangleCorner;
     public boolean mode = false;
-//    private StaticField staticField = new StaticField();
     public boolean showStaticField;
     Cords startingPointSF;
 
@@ -44,10 +43,6 @@ public class Board extends JComponent implements MouseInputListener {
             ex.printStackTrace();
         }
         calculateStaticFields();
-//        staticField.initialize(this);
-//        System.out.printf("field: %d\n", points[1][1].fields.get(new Cords(3, 3)));
-//        System.out.printf("%d\n",StaticField.getField(new PairCords(3, 3, 5, 5))[1][1]);
-
     }
 
     public void clear() {
@@ -120,7 +115,6 @@ public class Board extends JComponent implements MouseInputListener {
     }
 
     private void calculateStaticField(Cords cords){
-//        Cords begin = cords.begin, end = cords.end;
         Integer[][] field = new Integer[length][length];
         for(int x=0;x< length;x++)
             for(int y=0;y<height;y++)
@@ -132,9 +126,7 @@ public class Board extends JComponent implements MouseInputListener {
             toCheck.add(points[cords.x][cords.y]);
             while (!toCheck.isEmpty()) {
                 Point current = toCheck.remove(0);
-                boolean updated = false;
-                if(field[current.x][current.y]==0)
-                    updated = true;
+                boolean updated = field[current.x][current.y] == 0;
 
                 for (Point tmp : current.neighbors) {
                     if (    tmp.type == Subsoil.pavement ||
@@ -193,7 +185,6 @@ public class Board extends JComponent implements MouseInputListener {
 
         for (x = 1; x < points.length-1; ++x) {
             for (y = 1; y < points[x].length-1; ++y) {
-//                g.setColor(Subsoil.getColor(points[x][y].type));
                 g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
             }
