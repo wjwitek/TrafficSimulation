@@ -17,19 +17,21 @@ public class Board extends JComponent implements MouseInputListener {
     private static final long serialVersionUID = 1L;
     Point[][] points;
     private final int size;
-    public Subsoil editType= Subsoil.empty;
-    public int rectangleMode=0;
+    public Subsoil editType = Subsoil.empty;
+    public int rectangleMode = 0, length, height;
     private Cords rectangleCorner;
     public boolean mode = false;
 
     public Board(int length, int height, int squareSize, String mapSource) {
         size = squareSize;
+        this.length = length;
+        this.height = height;
         addMouseListener(this);
         addMouseMotionListener(this);
         setBackground(Color.WHITE);
         setOpaque(true);
         try {
-            initialize((length / size) + 1, (height / size) + 1, mapSource);
+            initialize(length, height, mapSource);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -44,7 +46,7 @@ public class Board extends JComponent implements MouseInputListener {
     }
 
     public void initialize(int length, int height, String mapSource) throws IOException {
-        points = new Point[length][height];
+        points = new Point[this.length][this.height];
         for (int x = 0; x < points.length; ++x)
             for (int y = 0; y < points[x].length; ++y)
                 points[x][y] = new Point();

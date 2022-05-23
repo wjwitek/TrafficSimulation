@@ -18,7 +18,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     @Serial
     private static final long serialVersionUID = 1L;
     private Board board;
-    int squareSize;
+    int squareSize, squaresVertically, squaresHorizontally;
     private final int maxDelay = 20; //TODO set higher limit after creating simulation, for now, with nothing to do, higher values crash app
     private final Timer timer;
     private int iterNum = 0;
@@ -41,10 +41,13 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         this.squareSize = squareSize;
     }
 
-    public void initialize(Container container) {
+    public void initialize(Container container, int squaresVertically, int squaresHorizontally) {
+        this.squaresVertically = squaresVertically;
+        this.squaresHorizontally = squaresHorizontally;
+
         this.container = container;
         this.container.setLayout(new BorderLayout());
-        this.container.setSize(new Dimension(1024, 768));
+        this.container.setSize(new Dimension(frame.getWidth(), frame.getWidth()));
 
         buttonPanel = new JPanel();
 
@@ -77,7 +80,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         buttonPanel.add(restart);
         buttonPanel.add(switchMode);
 
-        board = new Board(1024, 768 - buttonPanel.getHeight(), squareSize, "src/main/resources/table.txt");
+        board = new Board(squaresVertically+2, squaresHorizontally+2, squareSize, "src/main/resources/table.txt");
         this.container.add(board, BorderLayout.CENTER);
         this.container.add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -131,9 +134,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                     buttons.get(ButtonNames.StartStopSimulation).setText("Start");
                     buttons.get(ButtonNames.StartStopSimulation).setActionCommand("Start");
                 }
-                case "Restart" -> {
-                    restartSimulation();
-                }
+                case "Restart" -> restartSimulation();
                 case "Switch mode" -> {
                     mode = !mode;
                     board.mode = mode;
@@ -152,9 +153,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                     buttonPanel.repaint();
 
                 }
-                case "Save" -> {
-                    saveMap();
-                }
+                case "Save" -> saveMap();
                 case "drawType" -> board.editType = (Subsoil) drawType.getSelectedItem();
                 case "Clear" -> board.clear();
                 case "Rectangle" -> {
@@ -162,7 +161,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                         board.rectangleMode = 2;
                         buttons.get(ButtonNames.Rectangle).setText("Rectangle Mode Off");
                     }
-                    else if(board.rectangleMode==2) {
+                    else {
                         board.rectangleMode = 0;
                         buttons.get(ButtonNames.Rectangle).setText("Rectangle Mode On");
                     }
@@ -171,7 +170,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                     int returnValue = mapSource.showOpenDialog(null);
                     if (returnValue == JFileChooser.APPROVE_OPTION) {
                         try {
-                            board.initialize(1024, 768 - buttonPanel.getHeight(), String.valueOf(mapSource.getSelectedFile()));
+                            board.initialize(squaresVertically+2, squaresHorizontally+2, String.valueOf(mapSource.getSelectedFile()));
                             board.repaint();
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -210,9 +209,9 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         try {
             FileWriter table = new FileWriter("src/main/resources/table.txt");
             String[][] S = new String[board.points.length][board.points[0].length];
-            for (int j = 0; j < board.points.length; j++) {
-                for (int i = 0; i < board.points[0].length; i++) {
-                    S[j][i] = String.valueOf(board.points[j][i].type.toInt());
+            for (int j = 0; j < board.points[0].length; j++) {
+                for (int i = 0; i < board.points.length; i++) {
+                    S[i][j] = String.valueOf(board.points[i][j].type.toInt());
                 }
             }
             table.write(Arrays.deepToString(S));
