@@ -41,7 +41,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         this.squareSize = squareSize;
     }
 
-    public void initialize(Container container, int squaresVertically, int squaresHorizontally) {
+    public void initialize(Container container, int squaresHorizontally, int squaresVertically) {
         this.squaresVertically = squaresVertically;
         this.squaresHorizontally = squaresHorizontally;
 
@@ -80,7 +80,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         buttonPanel.add(restart);
         buttonPanel.add(switchMode);
 
-        board = new Board(squaresVertically+2, squaresHorizontally+2, squareSize, "src/main/resources/table.txt");
+        board = new Board(squaresHorizontally+2, squaresVertically+2, squareSize, "src/main/resources/table.txt");
         this.container.add(board, BorderLayout.CENTER);
         this.container.add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -170,7 +170,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                     int returnValue = mapSource.showOpenDialog(null);
                     if (returnValue == JFileChooser.APPROVE_OPTION) {
                         try {
-                            board.initialize(squaresVertically+2, squaresHorizontally+2, String.valueOf(mapSource.getSelectedFile()));
+                            board.initialize(String.valueOf(mapSource.getSelectedFile()));
                             board.repaint();
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
