@@ -7,5 +7,6 @@ public enum ButtonNames {
     NewSource,
     Save,
     Rectangle,
-    Clear
+    Clear,
+    StaticField
 }

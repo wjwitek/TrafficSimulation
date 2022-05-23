@@ -28,6 +28,8 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     private JPanel buttonPanel;
     private JSlider simulationSpeed;
     private JFileChooser mapSource;
+    private TextField xCords;
+    private TextField yCords;
 
     private JComboBox<Subsoil> drawType;
     Map<ButtonNames, JButton> buttons = new HashMap<>();
@@ -56,6 +58,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         JButton switchMode= initButton("Drawing tool", "Switch mode", ButtonNames.SwitchMode);
         JButton restart = initButton("Restart", "Restart", ButtonNames.Restart);
         JButton newSource = initButton("Open map", "Open", ButtonNames.NewSource);
+        JButton staticField = initButton("Show static field", "Static field", ButtonNames.StaticField);
 
         // initialize drawing tool buttons
         JButton save = initButton("Save", "Save", ButtonNames.Save);
@@ -65,6 +68,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         drawType = new JComboBox<>(Subsoil.values());
         drawType.addActionListener(this);
         drawType.setActionCommand("drawType");
+
+        xCords = new TextField();
+        xCords.setText("1");
+        yCords = new TextField();
+        yCords.setText("32");
 
         simulationSpeed = new JSlider();
         simulationSpeed.setMinimum(0);
@@ -76,6 +84,9 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
         buttonPanel.add(newSource);
         buttonPanel.add(startStopSimulation);
+        buttonPanel.add(staticField);
+        buttonPanel.add(xCords);
+        buttonPanel.add(yCords);
         buttonPanel.add(simulationSpeed);
         buttonPanel.add(restart);
         buttonPanel.add(switchMode);
@@ -88,6 +99,9 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     public void changeButtonsToDrawingTool(){
         // remove old buttons
         buttonPanel.remove(buttons.get(ButtonNames.StartStopSimulation));
+        buttonPanel.remove(buttons.get(ButtonNames.StaticField));
+        buttonPanel.remove(xCords);
+        buttonPanel.remove(yCords);
         buttonPanel.remove(simulationSpeed);
         buttonPanel.remove(buttons.get(ButtonNames.Restart));
         buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
@@ -110,6 +124,9 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
         // add normal mode buttons
         buttonPanel.add(buttons.get(ButtonNames.StartStopSimulation));
+        buttonPanel.add(buttons.get(ButtonNames.StaticField));
+        buttonPanel.add(xCords);
+        buttonPanel.add(yCords);
         buttonPanel.add(simulationSpeed);
         buttonPanel.add(buttons.get(ButtonNames.Restart));
         buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
@@ -135,6 +152,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                     buttons.get(ButtonNames.StartStopSimulation).setActionCommand("Start");
                 }
                 case "Restart" -> restartSimulation();
+                case "Static field" -> {
+                    board.startingPointSF.change(Integer.parseInt(xCords.getText()), Integer.parseInt(yCords.getText()));
+                    board.showStaticField = !board.showStaticField;
+                    board.repaint();
+                }
                 case "Switch mode" -> {
                     mode = !mode;
                     board.mode = mode;
@@ -170,7 +192,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                     int returnValue = mapSource.showOpenDialog(null);
                     if (returnValue == JFileChooser.APPROVE_OPTION) {
                         try {
-                            board.initialize(squaresVertically+2, squaresHorizontally+2, String.valueOf(mapSource.getSelectedFile()));
+                            board.initialize(String.valueOf(mapSource.getSelectedFile()));
                             board.repaint();
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -230,6 +252,6 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        System.exit(0);
+//        System.exit(0);
     }
 }
