@@ -1,5 +1,7 @@
 package main.java.gui;
 
+import java.awt.*;
+
 public enum Subsoil {
     empty       (0),
     street      (1),
@@ -10,7 +12,12 @@ public enum Subsoil {
     underground_street (7),
     underground_unavailable (8),
     underground_pavement (9),
-    lights      (6);
+    lights      (6),
+    streetN      (10),
+    streetE      (11),
+    streetS      (12),
+    streetW      (13);
+
 
     private final int intValue;
     Subsoil(int x){
@@ -31,7 +38,30 @@ public enum Subsoil {
             case 7 -> underground_street;
             case 8 -> underground_unavailable;
             case 9 -> underground_pavement;
+            case 10 -> streetN;
+            case 11 -> streetE;
+            case 12 -> streetS;
+            case 13 -> streetW;
             default -> unavailable;
+        };
+    }
+    public static Color getColor(Subsoil s){
+        return switch (s) {
+            case empty -> new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            case street -> new Color(0.3f, 0.3f, 0.3f, 0.7f);
+            case pavement -> new Color(0.2f, 0.8f, 0.2f, 0.7f);
+            case crossing -> new Color(0.6f, 0.6f, 0.6f, 0.7f);
+            case unavailable -> new Color(0.0f, 0.0f, 0.0f, 1.0f);
+            case underground -> new Color(0.7f, 0.0f, 0.7f, 0.7f);
+            case underground_street -> new Color(0.3f, 0.3f, 0.3f, 0.4f);
+            case underground_unavailable -> new Color(0.0f, 0.0f, 0.0f, 0.4f);
+            case underground_pavement -> new Color(0.2f, 0.8f, 0.2f, 0.4f);
+            case streetN -> new Color(0.4f, 0.3f, 0.3f, 0.7f);
+            case streetE -> new Color(0.3f, 0.4f, 0.3f, 0.7f);
+            case streetS -> new Color(0.3f, 0.3f, 0.4f, 0.7f);
+            case streetW -> new Color(0.3f, 0.3f, 0.3f, 0.9f);
+
+            default -> new Color(1.0f, 0.0f, 0.0f, 0.7f);
         };
     }
 }

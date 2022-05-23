@@ -54,16 +54,21 @@ public class Board extends JComponent implements MouseInputListener {
         String line = bufferedreader.readLine();
         while (line != null) {
             int x = 0, y = 0, idx=0;
-            while(idx<line.length()){
+            while(idx< line.length()){
+                StringBuilder S = new StringBuilder();
+                while(line.charAt(idx)>='0' && line.charAt(idx)<='9' &&(y<points.length-1 && x<points[0].length-1)){
+                    S.append(line.charAt(idx));
+                    idx++;
+                }
+                if(!S.toString().equals("")){
+                    points[y][x].type = Subsoil.fromInt(Integer.parseInt(S.toString()));
+                }
                 if(line.charAt(idx)==']') {
                     y += 1;
                     x=-1;
                 }
                 if(line.charAt(idx)==',')
                     x+=1;
-                if(line.charAt(idx)>='0' && line.charAt(idx)<='9' &&(y<points.length && x<points[0].length)) {
-                    points[y][x].type = Subsoil.fromInt(line.charAt(idx)-48);
-                }
                 idx++;
             }
             line = bufferedreader.readLine();
@@ -99,18 +104,7 @@ public class Board extends JComponent implements MouseInputListener {
 
         for (x = 1; x < points.length-1; ++x) {
             for (y = 1; y < points[x].length-1; ++y) {
-                switch (points[x][y].type) {
-                    case empty -> g.setColor(new Color(1.0f, 1.0f, 1.0f, 1.0f));
-                    case street -> g.setColor(new Color(0.3f, 0.3f, 0.3f, 0.7f));
-                    case pavement -> g.setColor(new Color(0.2f, 0.8f, 0.2f, 0.7f));
-                    case crossing -> g.setColor(new Color(0.6f, 0.6f, 0.6f, 0.7f));
-                    case unavailable -> g.setColor(new Color(0.0f, 0.0f, 0.0f, 1.0f));
-                    case underground -> g.setColor(new Color(0.7f, 0.0f, 0.7f, 0.7f));
-                    case underground_street -> g.setColor(new Color(0.3f, 0.3f, 0.3f, 0.4f));
-                    case underground_unavailable -> g.setColor(new Color(0.0f, 0.0f, 0.0f, 0.4f));
-                    case underground_pavement -> g.setColor(new Color(0.2f, 0.8f, 0.2f, 0.4f));
-                    default -> g.setColor(new Color(1.0f, 0.0f, 0.0f, 0.7f));
-                }
+                g.setColor(Subsoil.getColor(points[x][y].type));
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
             }
         }
