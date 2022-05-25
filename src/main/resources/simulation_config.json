@@ -1,0 +1,9 @@
+{
+  "spawn_points": [
+    {
+      "coords": [9, 1],
+      "probability": 20,
+      "direction": [0, 1]
+    }
+  ]
+}

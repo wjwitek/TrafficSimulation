@@ -20,6 +20,7 @@ public class Coords {
     public Coords multiplyByConstant(int n){
         return new Coords(x * n, y * n);
     }
+    public Coords copy(){return new Coords(x, y);}
 
     @Override
     public boolean equals(Object o) {

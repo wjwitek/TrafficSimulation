@@ -21,6 +21,7 @@ public class Car {
 
     public Car(Board newMap, int startingVelocity, Coords directionOfMovement, Coords startingPosition){
         map = newMap;
+        map.points[startingPosition.x][startingPosition.y].hasCar = true;
         if (startingVelocity > maxVelocity){
             throw new ArithmeticException("Starting velocity cannot be bigger than maximum velocity.");
         }
