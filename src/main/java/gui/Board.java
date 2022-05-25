@@ -21,10 +21,10 @@ public class Board extends JComponent implements MouseInputListener {
     int unreachable;
     public Subsoil editType = Subsoil.empty;
     public int rectangleMode = 0, length, height;
-    private Cords rectangleCorner;
+    private Coords rectangleCorner;
     public boolean mode = false;
     public boolean showStaticField;
-    Cords startingPointSF;
+    Coords startingPointSF;
 
     public Board(int length, int height, int squareSize, String mapSource) {
         showStaticField = false;
@@ -32,7 +32,7 @@ public class Board extends JComponent implements MouseInputListener {
         this.length = length;
         this.height = height;
         unreachable = length * height + 10;
-        startingPointSF = new Cords(1, 32);
+        startingPointSF = new Coords(1, 32);
         addMouseListener(this);
         addMouseMotionListener(this);
         setBackground(Color.WHITE);
@@ -109,21 +109,21 @@ public class Board extends JComponent implements MouseInputListener {
     private void calculateStaticFields(){
         for(int x=0;x< length;x++){
             for(int y=0;y<height;y++){
-                calculateStaticField(new Cords(x, y));
+                calculateStaticField(new Coords(x, y));
             }
         }
     }
 
-    private void calculateStaticField(Cords cords){
+    private void calculateStaticField(Coords coords){
         Integer[][] field = new Integer[length][length];
         for(int x=0;x< length;x++)
             for(int y=0;y<height;y++)
                 field[x][y]=unreachable;
-        field[cords.x][cords.y] = 0;
+        field[coords.x][coords.y] = 0;
 
-        if(points[cords.x][cords.y].type==Subsoil.pavement) {
+        if(points[coords.x][coords.y].type==Subsoil.pavement) {
             ArrayList<Point> toCheck = new ArrayList<>();
-            toCheck.add(points[cords.x][cords.y]);
+            toCheck.add(points[coords.x][coords.y]);
             while (!toCheck.isEmpty()) {
                 Point current = toCheck.remove(0);
                 boolean updated = field[current.x][current.y] == 0;
@@ -159,7 +159,7 @@ public class Board extends JComponent implements MouseInputListener {
         }
         for(int x= 1;x< length-1;x++) {
             for (int y = 1; y < height-1; y++) {
-                points[x][y].addField(cords, field[x][y]);
+                points[x][y].addField(coords, field[x][y]);
             }
         }
     }
@@ -198,10 +198,10 @@ public class Board extends JComponent implements MouseInputListener {
             int y = e.getY() / size;
             if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
                 if(rectangleMode==2){
-                    rectangleCorner = new Cords(x,y);
+                    rectangleCorner = new Coords(x,y);
                     rectangleMode--;
                 }else if(rectangleMode==1){
-                    Cords rectangleCorner2 = new Cords(x, y);
+                    Coords rectangleCorner2 = new Coords(x, y);
                     rectangleMode++;
                     for(int i = min(rectangleCorner.x, rectangleCorner2.x); i<=max(rectangleCorner.x, rectangleCorner2.x); i++){
                         for(int j = min(rectangleCorner.y, rectangleCorner2.y); j<=max(rectangleCorner.y, rectangleCorner2.y); j++){

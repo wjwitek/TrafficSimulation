@@ -2,9 +2,9 @@ package main.java.gui;
 
 import java.util.Objects;
 
-public class Cords {
+public class Coords {
     public int x,y;
-    public Cords(int x, int y){
+    public Coords(int x, int y){
         this.x=x;
         this.y=y;
     }
@@ -17,8 +17,8 @@ public class Cords {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Cords cords = (Cords) o;
-        return x == cords.x && y == cords.y;
+        Coords coords = (Coords) o;
+        return x == coords.x && y == coords.y;
     }
 
     @Override
