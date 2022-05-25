@@ -32,7 +32,6 @@ public class Car {
 
 
     public boolean move(){
-        System.out.println("I am moving:" + currentPosition.x + currentPosition.y);
         map.points[currentPosition.x][currentPosition.y].hasCar = false;
         currentPosition = vectorOfMovement.multiplyByConstant(velocity).add(currentPosition);
         if (outOfBounds()){

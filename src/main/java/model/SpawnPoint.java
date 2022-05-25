@@ -29,9 +29,7 @@ public class SpawnPoint {
     }
 
     public Car getCar(){
-        int random = getRandomNumber(0, 101);
-        System.out.println(random);
-        if (random < probability){
+        if (getRandomNumber(0, 101) < probability){
             return new Car(map, getRandomNumber(1, maxVelocity + 1), vectorOfMovement.copy(), coords.copy());
         }
         return null;

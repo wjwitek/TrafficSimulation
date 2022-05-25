@@ -189,7 +189,6 @@ public class Board extends JComponent implements MouseInputListener {
             for (y = 1; y < points[x].length-1; ++y) {
                 if (points[x][y].hasCar){
                     g.setColor(Color.CYAN); //TODO change to pulling color from car or something
-                    System.out.println("Hey, car at x, y");
                 }
                 else{
                     g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
@@ -240,8 +239,8 @@ public class Board extends JComponent implements MouseInputListener {
     public void mouseMoved(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {}
 
-    public void iteration(){
-        simulation.iteration();
+    public void iteration(int iteration_num){
+        simulation.iteration(iteration_num);
         this.repaint();
     }
 }

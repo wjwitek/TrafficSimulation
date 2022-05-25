@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 public class Simulation {
     private final String spawnSource = "/simulation_config.json";
+    private final int lightCycleLength = 120; // TODO move to simulation_config.json
     public ArrayList<Car> cars = new ArrayList<>();
     public ArrayList<SpawnPoint> spawnPoints = new ArrayList<>();
+    public ArrayList<TrafficLight> trafficLights = new ArrayList<>();
     private Board map;
 
     public Simulation(Board newMap){
@@ -29,11 +31,22 @@ public class Simulation {
             JSONObject info = (JSONObject) spawnPointsConfigs.get(i);
             spawnPoints.add(new SpawnPoint(info, map));
         }
+        // read traffic light from config
+        JSONArray trafficLightsConfig = spawns.getJSONArray("traffic_lights");
+        for (int i=0; i<trafficLightsConfig.length(); i++){
+            System.out.println("new light");
+            JSONObject info = (JSONObject) trafficLightsConfig.get(i);
+            trafficLights.add(new TrafficLight(info, map));
+        }
     }
 
-    public void iteration(){
+    public void iteration(int iteration_num){
         newCars();
         map.repaint();
+        // change color lights
+        for (TrafficLight light: trafficLights){
+            light.changeLight(iteration_num % lightCycleLength);
+        }
         // move and delete cars
         ArrayList<Car> carsToDelete = new ArrayList<>();
         for (Car car: cars){

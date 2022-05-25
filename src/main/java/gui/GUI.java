@@ -138,7 +138,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         if (e.getSource().equals(timer)){
             iterNum++;
             frame.setTitle("Traffic simulation, iteration: " + iterNum);
-            board.iteration();
+            board.iteration(iterNum);
         }
         else {
             String command = e.getActionCommand();
