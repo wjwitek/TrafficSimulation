@@ -19,7 +19,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     private static final long serialVersionUID = 1L;
     private Board board;
     int squareSize, squaresVertically, squaresHorizontally;
-    private final int maxDelay = 20; //TODO set higher limit after creating simulation, for now, with nothing to do, higher values crash app
+    private final int maxDelay = 500; //TODO set higher limit after creating simulation, for now, with nothing to do, higher values crash app
     private final Timer timer;
     private int iterNum = 0;
     private final JFrame frame;
@@ -38,7 +38,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     public GUI(JFrame jf, int squareSize) {
         jf.setResizable(false);
         frame = jf;
-        timer = new Timer(maxDelay / 5, this);
+        timer = new Timer(100, this);
         timer.stop();
         this.squareSize = squareSize;
     }
