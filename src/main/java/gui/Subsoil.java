@@ -12,11 +12,12 @@ public enum Subsoil {
     underground_street (7),
     underground_unavailable (8),
     underground_pavement (9),
-    lights      (6),
+    lights       (6),
     streetN      (10),
     streetE      (11),
     streetS      (12),
-    streetW      (13);
+    streetW      (13),
+    lights_cars  (14);
 
 
     private final int intValue;
@@ -42,6 +43,7 @@ public enum Subsoil {
             case 11 -> streetE;
             case 12 -> streetS;
             case 13 -> streetW;
+            case 14 -> lights_cars;
             default -> unavailable;
         };
     }
@@ -60,8 +62,8 @@ public enum Subsoil {
             case streetE -> new Color(0.3f, 0.4f, 0.3f, 0.7f);
             case streetS -> new Color(0.3f, 0.3f, 0.4f, 0.7f);
             case streetW -> new Color(0.3f, 0.3f, 0.3f, 0.9f);
-
-            default -> new Color(1.0f, 0.0f, 0.0f, 0.7f);
+            case lights_cars -> new Color(0.8f, 0.0f, 0.0f, 0.7f);
+            case lights -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
         };
     }
 }
