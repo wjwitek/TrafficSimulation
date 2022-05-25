@@ -63,7 +63,7 @@ public class Board extends JComponent implements MouseInputListener {
             for (int y = 1; y < points[x].length-1; ++y) {
                 for (int dx = -1; dx<= 1; ++dx) {
                     for (int dy = -1; dy <= 1; ++dy) {
-                        if(!(dx==0 && dy==0))
+                        if(!(dx==0 && dy==0) && dx*dy==0)
                             points[x][y].addNeighbor(points[x+dx][y+dy]);
                     }
                 }
