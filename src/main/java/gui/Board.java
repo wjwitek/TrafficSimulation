@@ -155,6 +155,48 @@ public class Board extends JComponent implements MouseInputListener {
                 }
             }
         }
+        else if(points[coords.x][coords.y].type==Subsoil.street||
+                points[coords.x][coords.y].type==Subsoil.streetN||
+                points[coords.x][coords.y].type==Subsoil.streetE||
+                points[coords.x][coords.y].type==Subsoil.streetS||
+                points[coords.x][coords.y].type==Subsoil.streetW){//TODO zrobic kierunki ulic
+            ArrayList<Point> toCheck = new ArrayList<>();
+            toCheck.add(points[coords.x][coords.y]);
+            while (!toCheck.isEmpty()) {
+                Point current = toCheck.remove(0);
+                boolean updated = field[current.x][current.y] == 0;
+
+                for (Point tmp : current.neighbors) {
+                    if (    tmp.type == Subsoil.street ||
+                            tmp.type == Subsoil.crossing ||
+                            tmp.type == Subsoil.streetE||
+                            tmp.type == Subsoil.streetN ||
+                            tmp.type == Subsoil.streetS ||
+                            tmp.type == Subsoil.streetW ||
+                            tmp.type == Subsoil.underground_street ||
+                            tmp.type == Subsoil.lights_cars) {
+                        if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
+                            field[current.x][current.y] = field[tmp.x][tmp.y] + 1;
+                            updated = true;
+                        }
+                    }
+                }
+                if (updated) {
+                    for (Point tmp : current.neighbors) {
+                        if (    tmp.type == Subsoil.street ||
+                                tmp.type == Subsoil.crossing ||
+                                tmp.type == Subsoil.streetE||
+                                tmp.type == Subsoil.streetN ||
+                                tmp.type == Subsoil.streetS ||
+                                tmp.type == Subsoil.streetW ||
+                                tmp.type == Subsoil.underground_street ||
+                                tmp.type == Subsoil.lights_cars) {
+                            toCheck.add(tmp);
+                        }
+                    }
+                }
+            }
+        }
         for(int x= 1;x< length-1;x++) {
             for (int y = 1; y < height-1; y++) {
                 points[x][y].addField(coords, field[x][y]);
