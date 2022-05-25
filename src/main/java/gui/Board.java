@@ -31,7 +31,7 @@ public class Board extends JComponent implements MouseInputListener {
         setBackground(Color.WHITE);
         setOpaque(true);
         try {
-            initialize(mapSource);
+            initialize(length, height, mapSource);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -45,11 +45,11 @@ public class Board extends JComponent implements MouseInputListener {
         this.repaint();
     }
 
-    public void initialize(String mapSource) throws IOException {
+    public void initialize(int length, int height, String mapSource) throws IOException {
         points = new Point[this.length][this.height];
         for (int x = 0; x < points.length; ++x)
             for (int y = 0; y < points[x].length; ++y)
-                points[x][y] = new Point(x, y);
+                points[x][y] = new Point();
 
         FileReader filereader = new FileReader(mapSource);
         BufferedReader bufferedreader = new BufferedReader(filereader);
