@@ -43,7 +43,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         this.squareSize = squareSize;
     }
 
-    public void initialize(Container container, int squaresVertically, int squaresHorizontally) {
+    public void initialize(Container container, int squaresHorizontally, int squaresVertically) {
         this.squaresVertically = squaresVertically;
         this.squaresHorizontally = squaresHorizontally;
 
@@ -71,8 +71,10 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
         xCords = new TextField();
         xCords.setText("1");
+        xCords.setPreferredSize(new Dimension(30,20));
         yCords = new TextField();
         yCords.setText("32");
+        yCords.setPreferredSize(new Dimension(30,20));
 
         simulationSpeed = new JSlider();
         simulationSpeed.setMinimum(0);
@@ -91,7 +93,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         buttonPanel.add(restart);
         buttonPanel.add(switchMode);
 
-        board = new Board(squaresVertically+2, squaresHorizontally+2, squareSize, "src/main/resources/table.txt");
+        board = new Board(squaresHorizontally+2, squaresVertically+2, squareSize, "src/main/resources/table.txt");
         this.container.add(board, BorderLayout.CENTER);
         this.container.add(buttonPanel, BorderLayout.SOUTH);
     }

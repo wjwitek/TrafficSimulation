@@ -61,14 +61,12 @@ public class Board extends JComponent implements MouseInputListener {
 
         for (int x = 1; x < points.length-1; ++x) {
             for (int y = 1; y < points[x].length-1; ++y) {
-                points[x][y].addNeighbor(points[x-1][y]);
-                points[x][y].addNeighbor(points[x][y-1]);
-                points[x][y].addNeighbor(points[x][y+1]);
-                points[x][y].addNeighbor(points[x+1][y]);
-                points[x][y].addNeighbor(points[x-1][y-1]);
-                points[x][y].addNeighbor(points[x-1][y+1]);
-                points[x][y].addNeighbor(points[x+1][y-1]);
-                points[x][y].addNeighbor(points[x+1][y+1]);
+                for (int dx = -1; dx<= 1; ++dx) {
+                    for (int dy = -1; dy <= 1; ++dy) {
+                        if(!(dx==0 && dy==0) && dx*dy==0)
+                            points[x][y].addNeighbor(points[x+dx][y+dy]);
+                    }
+                }
             }
         }
 
