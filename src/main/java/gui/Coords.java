@@ -13,6 +13,15 @@ public class Coords {
         this.y=y;
     }
 
+    public Coords add(Coords other){
+        return new Coords(other.x + x, other.y + y);
+    }
+
+    public Coords multiplyByConstant(int n){
+        return new Coords(x * n, y * n);
+    }
+    public Coords copy(){return new Coords(x, y);}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
