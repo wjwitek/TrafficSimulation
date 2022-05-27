@@ -34,7 +34,6 @@ public class Simulation {
         // read traffic light from config
         JSONArray trafficLightsConfig = spawns.getJSONArray("traffic_lights");
         for (int i=0; i<trafficLightsConfig.length(); i++){
-            System.out.println("new light");
             JSONObject info = (JSONObject) trafficLightsConfig.get(i);
             trafficLights.add(new TrafficLight(info, map));
         }

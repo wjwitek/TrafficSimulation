@@ -5,7 +5,6 @@ import main.java.gui.Coords;
 import main.java.gui.Subsoil;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class TrafficLight {
@@ -26,7 +25,6 @@ public class TrafficLight {
     }
 
     public void changeLight(int iteration){
-        System.out.println(sequence.get(iteration / 5) + " " + iteration);
         map.points[coords.x][coords.y].type = sequence.get(iteration); // / 5, cause our light sequence are changing every 5 seconds, not 1
     }
 }
