@@ -11,6 +11,7 @@ public class Point {
     final HashMap<Coords, Integer> fields = new HashMap<>();
     final HashMap<Coords, Float> maxField = new HashMap<>();
     Board board;
+    public boolean hasCar;
 
     public Point(int x, int y, Board board){
         this.x = x;
