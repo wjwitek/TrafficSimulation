@@ -131,13 +131,17 @@ public class Board extends JComponent implements MouseInputListener {
                 boolean updated = field[current.x][current.y] == 0;
 
                 for (Point tmp : current.neighbors) {
-                    if (    tmp.type == Subsoil.pavement ||
-                            tmp.type == Subsoil.crossing ||
-                            tmp.type == Subsoil.underground||
-                            tmp.type == Subsoil.underground_pavement ||
-                            tmp.type == Subsoil.underground_street ||
-                            tmp.type == Subsoil.underground_unavailable ||
-                            tmp.type == Subsoil.lights) {
+                    if (    current.type == Subsoil.pavement ||
+                            current.type == Subsoil.crossing ||
+                            current.type == Subsoil.crossingE ||
+                            current.type == Subsoil.crossingN ||
+                            current.type == Subsoil.crossingS ||
+                            current.type == Subsoil.crossingW ||
+                            current.type == Subsoil.underground||
+                            current.type == Subsoil.underground_pavement ||
+                            current.type == Subsoil.underground_street ||
+                            current.type == Subsoil.underground_unavailable ||
+                            current.type == Subsoil.lights) {
                         if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
                             field[current.x][current.y] = field[tmp.x][tmp.y] + 1;
                             updated = true;
@@ -148,6 +152,10 @@ public class Board extends JComponent implements MouseInputListener {
                     for (Point tmp : current.neighbors) {
                         if (    tmp.type == Subsoil.pavement ||
                                 tmp.type == Subsoil.crossing ||
+                                tmp.type == Subsoil.crossingE ||
+                                tmp.type == Subsoil.crossingN ||
+                                tmp.type == Subsoil.crossingS ||
+                                tmp.type == Subsoil.crossingW ||
                                 tmp.type == Subsoil.underground||
                                 tmp.type == Subsoil.underground_pavement ||
                                 tmp.type == Subsoil.underground_street ||
@@ -159,19 +167,80 @@ public class Board extends JComponent implements MouseInputListener {
                 }
             }
         }
+        else if(points[coords.x][coords.y].type==Subsoil.street||
+                points[coords.x][coords.y].type==Subsoil.streetN||
+                points[coords.x][coords.y].type==Subsoil.streetE||
+                points[coords.x][coords.y].type==Subsoil.streetS||
+                points[coords.x][coords.y].type==Subsoil.streetW){
+            ArrayList<Point> toCheck = new ArrayList<>();
+            toCheck.add(points[coords.x][coords.y]);
+            while (!toCheck.isEmpty()) {
+                Point current = toCheck.remove(0);
+                boolean updated = field[current.x][current.y] == 0;
+                for (Point tmp : current.neighbors) {
+                    if (    current.type == Subsoil.street ||
+//                            current.type == Subsoil.crossing ||
+                            current.type == Subsoil.crossingE && tmp.x > current.x ||
+                            current.type == Subsoil.crossingN && tmp.y < current.y ||
+                            current.type == Subsoil.crossingS && tmp.y > current.y ||
+                            current.type == Subsoil.crossingW && tmp.x < current.x ||
+                            current.type == Subsoil.streetE && tmp.x > current.x ||
+                            current.type == Subsoil.streetN && tmp.y < current.y ||
+                            current.type == Subsoil.streetS && tmp.y > current.y ||
+                            current.type == Subsoil.streetW && tmp.x < current.x ||
+                            current.type == Subsoil.underground_street ||
+                            current.type == Subsoil.lights_cars) {
+                        if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
+                            field[current.x][current.y] = field[tmp.x][tmp.y] + 1;
+                            updated = true;
+                        }
+                    }
+                }
+                if (updated) {
+                    for (Point tmp : current.neighbors) {
+                        if (    tmp.type == Subsoil.street ||
+                                tmp.type == Subsoil.crossing ||
+                                tmp.type == Subsoil.crossingE ||
+                                tmp.type == Subsoil.crossingN ||
+                                tmp.type == Subsoil.crossingS ||
+                                tmp.type == Subsoil.crossingW ||
+                                tmp.type == Subsoil.streetE ||
+                                tmp.type == Subsoil.streetN ||
+                                tmp.type == Subsoil.streetS ||
+                                tmp.type == Subsoil.streetW ||
+//                                tmp.type == Subsoil.streetE && tmp.x < current.x ||
+//                                tmp.type == Subsoil.streetN && tmp.y < current.y ||
+//                                tmp.type == Subsoil.streetS && tmp.y > current.y ||
+//                                tmp.type == Subsoil.streetW && tmp.x > current.x ||
+                                tmp.type == Subsoil.underground_street ||
+                                tmp.type == Subsoil.lights_cars) {
+                            toCheck.add(tmp);
+                        }
+                    }
+                }
+            }
+        }
+        float maxField = 0;
         for(int x= 1;x< length-1;x++) {
             for (int y = 1; y < height-1; y++) {
                 points[x][y].addField(coords, field[x][y]);
+                if(field[x][y]!=unreachable)
+                    maxField = max(maxField, field[x][y]);
+            }
+        }
+        for(int x= 1;x< length-1;x++) {
+            for (int y = 1; y < height-1; y++) {
+                points[x][y].addMaxField(coords, maxField);
             }
         }
     }
 
     private void drawNetting(Graphics g, int gridSpace) {
         Insets insets = getInsets();
-        int firstX = insets.left;
-        int firstY = insets.top;
-        int lastX = this.getWidth() - insets.right;
-        int lastY = this.getHeight() - insets.bottom;
+        int firstX = insets.left+gridSpace;
+        int firstY = insets.top+gridSpace;
+        int lastX=firstX+(length-2)*size;
+        int lastY=firstY+(height-2)*size;
 
         int x = firstX;
         while (x < lastX) {

@@ -18,9 +18,9 @@ public class Program extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        this.setSize(977, 756);
+        this.setSize(960, 800); //756
         GUI gof = new GUI(this, 20);
-        gof.initialize(this.getContentPane(), 46, 32);//46x32
+        gof.initialize(this.getContentPane(), 46, 33);//46x33
         this.setVisible(true);
     }
 }

@@ -9,6 +9,7 @@ public class Point {
     public ArrayList<Point> neighbors = new ArrayList<>();
     public int x, y;
     final HashMap<Coords, Integer> fields = new HashMap<>();
+    final HashMap<Coords, Float> maxField = new HashMap<>();
     Board board;
     public boolean hasCar;
 
@@ -21,13 +22,21 @@ public class Point {
 
     public void addNeighbor(Point nei) {neighbors.add(nei);}
     public void addField(Coords coords, Integer value){fields.put(coords, value);}
+    public void addMaxField(Coords coords, Float value){maxField.put(coords, value);}
 
     public Color getColor(Coords coords, boolean staticField){
         if(staticField) {
             int distance = fields.get(coords);
             if(distance==board.unreachable)
                 return new Color(0.2f, 0.2f, 0.2f, 0.7f);
-            return new Color(0.3f, 0.3f, 1f, 1-(fields.get(coords))/(float)80);
+            if(board.points[coords.x][coords.y].type==Subsoil.pavement)
+                return new Color(0.3f, 0.3f, 1f, 1-(distance)/maxField.get(coords));
+            if(board.points[coords.x][coords.y].type==Subsoil.street||
+                    board.points[coords.x][coords.y].type==Subsoil.streetN||
+                    board.points[coords.x][coords.y].type==Subsoil.streetE||
+                    board.points[coords.x][coords.y].type==Subsoil.streetS||
+                    board.points[coords.x][coords.y].type==Subsoil.streetW)
+                return new Color(1f, 0.3f, 0.3f, 1-(distance)/maxField.get(coords));
         }
         return Subsoil.getColor(type);
     }
