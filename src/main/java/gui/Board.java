@@ -1,5 +1,7 @@
 package main.java.gui;
 
+import main.java.model.Simulation;
+
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
@@ -16,7 +18,7 @@ import static java.lang.Math.min;
 public class Board extends JComponent implements MouseInputListener {
     @Serial
     private static final long serialVersionUID = 1L;
-    Point[][] points;
+    public Point[][] points;
     private final int size;
     int unreachable;
     public Subsoil editType = Subsoil.empty;
@@ -25,8 +27,10 @@ public class Board extends JComponent implements MouseInputListener {
     public boolean mode = false;
     public boolean showStaticField;
     Coords startingPointSF;
+    private Simulation simulation;
 
     public Board(int length, int height, int squareSize, String mapSource) {
+        simulation = new Simulation(this);
         showStaticField = false;
         size = squareSize;
         this.length = length;
@@ -252,8 +256,13 @@ public class Board extends JComponent implements MouseInputListener {
 
         for (x = 1; x < points.length-1; ++x) {
             for (y = 1; y < points[x].length-1; ++y) {
-                g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
-                g.fillRect(((x) * size) + 1, ((y) * size) + 1, (size - 1), (size - 1));
+                if (points[x][y].hasCar){
+                    g.setColor(Color.CYAN); //TODO change to pulling color from car or something
+                }
+                else{
+                    g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
+                }
+                g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
             }
         }
 
@@ -299,8 +308,8 @@ public class Board extends JComponent implements MouseInputListener {
     public void mouseMoved(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {}
 
-    public void iteration(){
-        // TODO
-        System.out.println("Something happens in simulation.");
+    public void iteration(int iteration_num){
+        simulation.iteration(iteration_num);
+        this.repaint();
     }
 }
