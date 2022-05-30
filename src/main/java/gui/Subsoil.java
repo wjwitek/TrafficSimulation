@@ -20,7 +20,7 @@ public enum Subsoil {
     crossingN    (16),
     crossingE    (17),
     crossingS    (18),
-    crossingW    (19);
+    crossingW    (19),
     lights_cars_red(14),
     lights_cars_green(15);
 
