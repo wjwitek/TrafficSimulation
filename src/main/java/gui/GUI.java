@@ -25,7 +25,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     private final JFrame frame;
     private Container container;
     private boolean mode = false;
-    private JPanel buttonPanel;
+    private JPanel buttonPanel, buttonPanel1, buttonPanel2;
     private JSlider simulationSpeed;
     private JFileChooser mapSource;
     private TextField xCords;
@@ -51,7 +51,9 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         this.container.setLayout(new BorderLayout());
         this.container.setSize(new Dimension(frame.getWidth(), frame.getWidth()));
 
-        buttonPanel = new JPanel();
+        buttonPanel = new JPanel(new GridLayout(2,4));
+        buttonPanel1 = new JPanel();
+        buttonPanel2 = new JPanel();
 
         // initialize normal mode buttons
         JButton startStopSimulation = initButton("Start", "Start", ButtonNames.StartStopSimulation);
@@ -73,7 +75,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         xCords.setText("1");
         xCords.setPreferredSize(new Dimension(30,20));
         yCords = new TextField();
-        yCords.setText("32");
+        yCords.setText("21");
         yCords.setPreferredSize(new Dimension(30,20));
 
         simulationSpeed = new JSlider();
@@ -84,14 +86,17 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
         mapSource = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-        buttonPanel.add(newSource);
-        buttonPanel.add(startStopSimulation);
         buttonPanel.add(staticField);
         buttonPanel.add(xCords);
         buttonPanel.add(yCords);
+        buttonPanel.add(switchMode);
+
+        buttonPanel.add(newSource);
+        buttonPanel.add(startStopSimulation);
         buttonPanel.add(simulationSpeed);
         buttonPanel.add(restart);
-        buttonPanel.add(switchMode);
+
+//        buttonPanels.add(buttonPanel1, buttonPanel2);
 
         board = new Board(squaresHorizontally+2, squaresVertically+2, squareSize, "src/main/resources/table.txt");
         this.container.add(board, BorderLayout.CENTER);
@@ -100,20 +105,21 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
     public void changeButtonsToDrawingTool(){
         // remove old buttons
+        buttonPanel.remove(buttons.get(ButtonNames.NewSource));
         buttonPanel.remove(buttons.get(ButtonNames.StartStopSimulation));
-        buttonPanel.remove(buttons.get(ButtonNames.StaticField));
-        buttonPanel.remove(xCords);
-        buttonPanel.remove(yCords);
+//        buttonPanel.remove(buttons.get(ButtonNames.StaticField));
+//        buttonPanel.remove(xCords);
+//        buttonPanel.remove(yCords);
         buttonPanel.remove(simulationSpeed);
         buttonPanel.remove(buttons.get(ButtonNames.Restart));
-        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
+//        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
 
         // add new buttons
         buttonPanel.add(buttons.get(ButtonNames.Save));
         buttonPanel.add(buttons.get(ButtonNames.Rectangle));
         buttonPanel.add(drawType);
         buttonPanel.add(buttons.get(ButtonNames.Clear));
-        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
+//        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
     }
 
     public void changeToNormalMode(){
@@ -122,16 +128,17 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         buttonPanel.remove(buttons.get(ButtonNames.Rectangle));
         buttonPanel.remove(drawType);
         buttonPanel.remove(buttons.get(ButtonNames.Clear));
-        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
+//        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
 
         // add normal mode buttons
+        buttonPanel.add(buttons.get(ButtonNames.NewSource));
         buttonPanel.add(buttons.get(ButtonNames.StartStopSimulation));
-        buttonPanel.add(buttons.get(ButtonNames.StaticField));
-        buttonPanel.add(xCords);
-        buttonPanel.add(yCords);
+//        buttonPanel.add(buttons.get(ButtonNames.StaticField));
+//        buttonPanel.add(xCords);
+//        buttonPanel.add(yCords);
         buttonPanel.add(simulationSpeed);
         buttonPanel.add(buttons.get(ButtonNames.Restart));
-        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
+//        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
     }
 
     public void actionPerformed(ActionEvent e) {
