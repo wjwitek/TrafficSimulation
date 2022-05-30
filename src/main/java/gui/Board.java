@@ -189,7 +189,8 @@ public class Board extends JComponent implements MouseInputListener {
                             current.type == Subsoil.streetS && tmp.y > current.y ||
                             current.type == Subsoil.streetW && tmp.x < current.x ||
                             current.type == Subsoil.underground_street ||
-                            current.type == Subsoil.lights_cars) {
+                            current.type == Subsoil.lights_cars_green ||
+                            current.type == Subsoil.lights_cars_red) {
                         if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
                             field[current.x][current.y] = field[tmp.x][tmp.y] + 1;
                             updated = true;
@@ -213,7 +214,8 @@ public class Board extends JComponent implements MouseInputListener {
 //                                tmp.type == Subsoil.streetS && tmp.y > current.y ||
 //                                tmp.type == Subsoil.streetW && tmp.x > current.x ||
                                 tmp.type == Subsoil.underground_street ||
-                                tmp.type == Subsoil.lights_cars) {
+                                tmp.type == Subsoil.lights_cars_green ||
+                                tmp.type == Subsoil.lights_cars_red) {
                             toCheck.add(tmp);
                         }
                     }
