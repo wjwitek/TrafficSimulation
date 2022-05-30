@@ -28,8 +28,8 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     private JPanel buttonPanel, buttonPanel1, buttonPanel2;
     private JSlider simulationSpeed;
     private JFileChooser mapSource;
-    private TextField xCords;
-    private TextField yCords;
+//    private TextField xCords;
+//    private TextField yCords;
 
     private JComboBox<Subsoil> drawType;
     Map<ButtonNames, JButton> buttons = new HashMap<>();
@@ -71,12 +71,12 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         drawType.addActionListener(this);
         drawType.setActionCommand("drawType");
 
-        xCords = new TextField();
-        xCords.setText("1");
-        xCords.setPreferredSize(new Dimension(30,20));
-        yCords = new TextField();
-        yCords.setText("21");
-        yCords.setPreferredSize(new Dimension(30,20));
+//        xCords = new TextField();
+//        xCords.setText("1");
+//        xCords.setPreferredSize(new Dimension(30,20));
+//        yCords = new TextField();
+//        yCords.setText("21");
+//        yCords.setPreferredSize(new Dimension(30,20));
 
         simulationSpeed = new JSlider();
         simulationSpeed.setMinimum(0);
@@ -87,8 +87,8 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         mapSource = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
         buttonPanel.add(staticField);
-        buttonPanel.add(xCords);
-        buttonPanel.add(yCords);
+//        buttonPanel.add(xCords);
+//        buttonPanel.add(yCords);
         buttonPanel.add(switchMode);
 
         buttonPanel.add(newSource);
@@ -162,9 +162,20 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                 }
                 case "Restart" -> restartSimulation();
                 case "Static field" -> {
-                    board.startingPointSF.change(Integer.parseInt(xCords.getText()), Integer.parseInt(yCords.getText()));
-                    board.showStaticField = !board.showStaticField;
-                    board.repaint();
+                    if(board.modeSF){
+                        board.modeSF = false;
+                        board.showStaticField = false;
+                        buttons.get(ButtonNames.StaticField).setText("Show static field");
+                        board.repaint();
+                    }
+                    else{
+                        board.modeSF = true;
+                        buttons.get(ButtonNames.StaticField).setText("Hide static field");
+                    }
+//                    board.modeSF = !board.modeSF;
+//                    board.startingPointSF.change(Integer.parseInt(xCords.getText()), Integer.parseInt(yCords.getText()));
+//                    board.showStaticField = !board.showStaticField;
+//                    board.repaint();
                 }
                 case "Switch mode" -> {
                     mode = !mode;

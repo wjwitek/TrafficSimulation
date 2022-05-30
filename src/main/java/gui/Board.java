@@ -24,7 +24,7 @@ public class Board extends JComponent implements MouseInputListener {
     public Subsoil editType = Subsoil.empty;
     public int rectangleMode = 0, length, height;
     private Coords rectangleCorner;
-    public boolean mode = false;
+    public boolean mode = false, modeSF = false;
     public boolean showStaticField;
     Coords startingPointSF;
     private Simulation simulation;
@@ -271,9 +271,11 @@ public class Board extends JComponent implements MouseInputListener {
     }
 
     public void mouseClicked(MouseEvent e) {
+        int x = e.getX() / size;
+        int y = e.getY() / size;
         if (mode){
-            int x = e.getX() / size;
-            int y = e.getY() / size;
+//            int x = e.getX() / size;
+//            int y = e.getY() / size;
             if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
                 if(rectangleMode==2){
                     rectangleCorner = new Coords(x,y);
@@ -290,6 +292,11 @@ public class Board extends JComponent implements MouseInputListener {
                 points[x][y].type= editType;
                 this.repaint();
             }
+        }
+        else if(modeSF){
+            startingPointSF.change(x,y);
+            showStaticField = !showStaticField;
+            repaint();
         }
     }
 
