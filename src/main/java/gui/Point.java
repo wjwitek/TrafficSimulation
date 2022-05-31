@@ -8,10 +8,11 @@ public class Point {
     public Subsoil type;
     public ArrayList<Point> neighbors = new ArrayList<>();
     public int x, y;
-    final HashMap<Coords, Integer> fields = new HashMap<>();
+    public final HashMap<Coords, Integer> fields = new HashMap<>();
     final HashMap<Coords, Float> maxField = new HashMap<>();
     Board board;
     public boolean hasCar;
+    public boolean hasPedestrian;
 
     public Point(int x, int y, Board board){
         this.x = x;
