@@ -20,7 +20,7 @@ public class Board extends JComponent implements MouseInputListener {
     private static final long serialVersionUID = 1L;
     public Point[][] points;
     private final int size;
-    public int unreachable;
+    int unreachable;
     public Subsoil editType = Subsoil.empty;
     public int rectangleMode = 0, length, height;
     private Coords rectangleCorner;

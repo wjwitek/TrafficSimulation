@@ -39,8 +39,7 @@ public class Pedestrian {
         int minNeighboursStaticFiled = map.points[currentPosition.x][currentPosition.y].fields.get(destinationPosition);
         for (Point point : neighborsPedestrian) {
             if (map.points[point.x][point.y].fields.containsKey(destinationPosition) &&
-                    minNeighboursStaticFiled > map.points[point.x][point.y].fields.get(destinationPosition) &&
-                    map.points[point.x][point.y].fields.get(destinationPosition)!= map.unreachable ) {
+                    minNeighboursStaticFiled > map.points[point.x][point.y].fields.get(destinationPosition)) {
                 minNeighboursStaticFiled = map.points[point.x][point.y].fields.get(destinationPosition);
                 nextPosition =new Coords(point.x, point.y);
             }
