@@ -334,6 +334,7 @@ public class Board extends JComponent implements MouseInputListener {
         simulation.iteration(iteration_num);
         this.repaint();
     }
+  
     public void restart(){
         simulation.cars.clear();
         simulation.pedestrians.clear();
@@ -344,5 +345,9 @@ public class Board extends JComponent implements MouseInputListener {
         }
         calculateStaticFields();
         this.repaint();
+
+
+    public Point getPointByCoords(Coords coords){
+        return points[coords.x][coords.y];
     }
 }

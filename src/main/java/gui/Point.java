@@ -9,7 +9,7 @@ public class Point {
     public ArrayList<Point> neighbors = new ArrayList<>();
     public int x, y;
     public final HashMap<Coords, Integer> fields = new HashMap<>();
-    final HashMap<Coords, Float> maxField = new HashMap<>();
+    public final HashMap<Coords, Float> maxField = new HashMap<>();
     Board board;
     public boolean hasCar;
     public boolean hasPedestrian;
@@ -44,5 +44,20 @@ public class Point {
 
     public void clear(){
         type = Subsoil.empty;
+    }
+
+    public Point getLowestStaticFieldNeighbour(Coords destination){
+        Point best = neighbors.get(0);
+        for (int i=1; i<neighbors.size(); i++){
+            if (!(Subsoil.driveable(best.type)) && Subsoil.driveable(neighbors.get(i).type)){
+                best = neighbors.get(i);
+            }
+            else if (Subsoil.driveable(best.type) && Subsoil.driveable(neighbors.get(i).type)){
+                if (best.fields.get(destination) > neighbors.get(i).fields.get(destination)){
+                    best = neighbors.get(i);
+                }
+            }
+        }
+        return best;
     }
 }

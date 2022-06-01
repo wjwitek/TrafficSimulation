@@ -86,4 +86,20 @@ public enum Subsoil {
             case lights_pedestrians_red -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
         };
     }
+
+    public static boolean driveable(Subsoil s){
+        return switch (s){
+            case street, crossing, underground_street, lights_cars_green -> true;
+            case streetN -> true;
+            case streetE -> true;
+            case streetS -> true;
+            case streetW -> true;
+            case crossingN -> true;
+            case crossingE -> true;
+            case crossingS -> true;
+            case crossingW -> true;
+            case lights_cars_red -> true;
+            default -> false;
+        };
+    }
 }

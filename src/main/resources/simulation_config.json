@@ -1,9 +1,19 @@
 {
   "spawn_points_cars": [
     {
-      "coords": [11, 1],
+      "coords": [12, 1],
       "probability": 20,
-      "direction": [0, 1]
+      "destination": [46, 23]
+    },
+    {
+      "coords": [1, 23],
+      "probability": 10,
+      "destination": [15, 1]
+    },
+    {
+      "coords": [14, 33],
+      "probability": 30,
+      "destination": [15, 1]
     }
   ],
   "destination_points_pedestrians": [
