@@ -29,7 +29,7 @@ public class CarSpawnPoint extends SpawnPoint {
 
     public Car get(){
       if (getRandomNumber(0, 101) < spawn_probability && !(map.getPointByCoords(coords).hasCar)){
-          Car newCar = new Car(map, getRandomNumber(1, maxVelocity + 1), coords.copy());
+          Car newCar = new Car(map, getRandomNumber(1, maxVelocity + 1), coords.copy(), maxVelocity);
           // TODO change to random generation
           int destination_no = getRandomNumber(0, 101);
           int idx = 0;

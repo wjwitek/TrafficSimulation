@@ -23,7 +23,9 @@ public enum Subsoil {
     crossingW    (19),
     lights_cars_red(14),
     lights_cars_green(15),
-    lights_pedestrians_green (20);
+    lights_pedestrians_green (20),
+    underground_streetN (21),
+    underground_streetS (22);
 
 
     private final int intValue;
@@ -56,6 +58,8 @@ public enum Subsoil {
             case 14 -> lights_cars_red;
             case 15 -> lights_cars_green;
             case 20 -> lights_pedestrians_green;
+            case 21 -> underground_streetN;
+            case 22 -> underground_streetS;
             default -> unavailable;
         };
     }
@@ -66,6 +70,8 @@ public enum Subsoil {
             case unavailable -> new Color(0.0f, 0.0f, 0.0f, 1.0f);
             case underground -> new Color(0.7f, 0.0f, 0.7f, 0.7f);
             case underground_street -> new Color(0.3f, 0.3f, 0.3f, 0.4f);
+            case underground_streetN -> new Color(0.4f, 0.3f, 0.3f, 0.4f);
+            case underground_streetS -> new Color(0.3f, 0.3f, 0.4f, 0.4f);
             case underground_unavailable -> new Color(0.0f, 0.0f, 0.0f, 0.4f);
             case underground_pavement -> new Color(0.2f, 0.8f, 0.2f, 0.4f);
 //            case street, streetN, streetE, streetS, streetW -> new Color(0.3f, 0.3f, 0.3f, 0.7f);
@@ -90,6 +96,8 @@ public enum Subsoil {
     public static boolean driveable(Subsoil s){
         return switch (s){
             case street, crossing, underground_street, lights_cars_green -> true;
+            case underground_streetN -> true;
+            case underground_streetS -> true;
             case streetN -> true;
             case streetE -> true;
             case streetS -> true;

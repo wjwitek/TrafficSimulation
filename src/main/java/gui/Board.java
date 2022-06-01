@@ -143,6 +143,8 @@ public class Board extends JComponent implements MouseInputListener {
                             current.type == Subsoil.underground ||
                             current.type == Subsoil.underground_pavement ||
                             current.type == Subsoil.underground_street ||
+                            current.type == Subsoil.underground_streetS ||
+                            current.type == Subsoil.underground_streetN ||
                             current.type == Subsoil.underground_unavailable ||
                             current.type == Subsoil.lights_pedestrians_red ||
                             current.type == Subsoil.lights_pedestrians_green) {
@@ -163,6 +165,8 @@ public class Board extends JComponent implements MouseInputListener {
                                 tmp.type == Subsoil.underground ||
                                 tmp.type == Subsoil.underground_pavement ||
                                 tmp.type == Subsoil.underground_street ||
+                                tmp.type == Subsoil.underground_streetS ||
+                                tmp.type == Subsoil.underground_streetN ||
                                 tmp.type == Subsoil.underground_unavailable ||
                                 tmp.type == Subsoil.lights_pedestrians_red ||
                                 tmp.type == Subsoil.lights_pedestrians_green) {
@@ -192,7 +196,9 @@ public class Board extends JComponent implements MouseInputListener {
                             current.type == Subsoil.streetN && tmp.y < current.y ||
                             current.type == Subsoil.streetS && tmp.y > current.y ||
                             current.type == Subsoil.streetW && tmp.x < current.x ||
-                            current.type == Subsoil.underground_street ||
+//                            current.type == Subsoil.underground_street ||
+                            current.type == Subsoil.underground_streetS && tmp.y > current.y ||
+                            current.type == Subsoil.underground_streetN && tmp.y < current.y ||
                             current.type == Subsoil.lights_cars_green ||
                             current.type == Subsoil.lights_cars_red) {
                         if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
@@ -218,6 +224,8 @@ public class Board extends JComponent implements MouseInputListener {
 //                                tmp.type == Subsoil.streetS && tmp.y > current.y ||
 //                                tmp.type == Subsoil.streetW && tmp.x > current.x ||
                                 tmp.type == Subsoil.underground_street ||
+                                tmp.type == Subsoil.underground_streetS ||
+                                tmp.type == Subsoil.underground_streetN ||
                                 tmp.type == Subsoil.lights_cars_green ||
                                 tmp.type == Subsoil.lights_cars_red) {
                             toCheck.add(tmp);

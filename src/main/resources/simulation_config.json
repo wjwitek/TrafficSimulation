@@ -67,7 +67,7 @@
     },
     {
       "coords": [46, 22],
-      "spawn_probability": 4,
+      "spawn_probability": 2,
       "destination": [11, 33, 12, 33, 15, 1, 16, 1, 1, 20, 1, 21],
       "destination_probability" : [12, 12, 27, 27, 12, 12]
     },
