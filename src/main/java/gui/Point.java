@@ -3,6 +3,7 @@ package main.java.gui;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Point {
     public Subsoil type;
@@ -47,17 +48,37 @@ public class Point {
     }
 
     public Point getLowestStaticFieldNeighbour(Coords destination){
-        Point best = neighbors.get(0);
+        ArrayList<Point> bests = new ArrayList<>();
+        bests.add(neighbors.get(0));
+//        Point best = neighbors.get(0);
         for (int i=1; i<neighbors.size(); i++){
-            if (!(Subsoil.driveable(best.type)) && Subsoil.driveable(neighbors.get(i).type)){
-                best = neighbors.get(i);
+            if (!(Subsoil.driveable(bests.get(0).type)) && Subsoil.driveable(neighbors.get(i).type)){
+                bests.clear();
+                bests.add(neighbors.get(i));
             }
-            else if (Subsoil.driveable(best.type) && Subsoil.driveable(neighbors.get(i).type)){
-                if (best.fields.get(destination) > neighbors.get(i).fields.get(destination)){
-                    best = neighbors.get(i);
+            else if (Subsoil.driveable(bests.get(0).type) && Subsoil.driveable(neighbors.get(i).type)){
+                if (bests.get(0).fields.get(destination) > neighbors.get(i).fields.get(destination)){
+                    bests.clear();
+                    bests.add(neighbors.get(i));
+                }
+                else if (Objects.equals(bests.get(0).fields.get(destination), neighbors.get(i).fields.get(destination))){
+                    bests.add(neighbors.get(i));
                 }
             }
         }
-        return best;
+        if(!(Subsoil.driveable(bests.get(0).type)))
+            throw new RuntimeException("Point" + this.x + ", " + this.y + "do not have valid neighbour!\n");
+        Point firstNeighbor = bests.get(0);
+        for(int i=bests.size()-1;i>=0;i--){
+            if(bests.get(i).hasCar)
+                bests.remove(i);
+        }
+        if(bests.isEmpty())
+            return firstNeighbor;
+        return bests.get(getRandomNumber(0,bests.size()));
+    }
+
+    public int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
     }
 }

@@ -1,19 +1,82 @@
 {
   "spawn_points_cars": [
     {
-      "coords": [12, 1],
-      "probability": 20,
-      "destination": [46, 23]
+      "coords": [9, 1],
+      "spawn_probability": 6,
+      "destination": [1, 20, 1, 21],
+      "destination_probability" : [50, 50]
     },
+    {
+      "coords": [10, 1],
+      "spawn_probability": 40,
+      "destination": [11, 33, 12, 33],
+      "destination_probability" : [50, 50]
+    },
+    {
+      "coords": [11, 1],
+      "spawn_probability": 40,
+      "destination": [11, 33, 12, 33],
+      "destination_probability" : [50, 50]
+    },
+    {
+      "coords": [12, 1],
+      "spawn_probability": 3,
+      "destination": [46, 23, 46, 24],
+      "destination_probability" : [50, 50]
+    },
+
     {
       "coords": [1, 23],
-      "probability": 10,
-      "destination": [15, 1]
+      "spawn_probability": 8,
+      "destination": [46, 23],
+      "destination_probability" : [100]
     },
     {
+      "coords": [1, 24],
+      "spawn_probability": 8,
+      "destination": [11, 33],
+      "destination_probability" : [100]
+    },
+
+    {
       "coords": [14, 33],
-      "probability": 30,
-      "destination": [15, 1]
+      "spawn_probability": 33,
+      "destination": [15, 1, 16, 1, 46, 23, 46, 24],
+      "destination_probability" : [25, 25, 25, 25]
+    },
+    {
+      "coords": [13, 33],
+      "spawn_probability": 33,
+      "destination": [1, 20, 1, 21, 46, 23, 46, 24],
+      "destination_probability" : [25, 25, 25, 25]
+    },
+
+    {
+      "coords": [32, 33],
+      "spawn_probability": 7,
+      "destination": [1, 20, 1, 21, 46, 23, 46, 24],
+      "destination_probability" : [20, 20, 30, 30]
+    },
+
+
+    {
+      "coords": [46, 21],
+      "spawn_probability": 4,
+      "destination": [35, 1, 11, 33, 12, 33, 15, 1, 16, 1],
+      "destination_probability" : [28, 10, 10, 26, 26]
+    },
+    {
+      "coords": [46, 22],
+      "spawn_probability": 4,
+      "destination": [11, 33, 12, 33, 15, 1, 16, 1, 1, 20, 1, 21],
+      "destination_probability" : [12, 12, 27, 27, 12, 12]
+    },
+
+    {
+      "coords": [32, 1],
+      "spawn_probability": 7,
+      "destination": [46, 24, 11, 33, 12, 33, 15, 1, 16, 1],
+      "destination_probability" : [20, 20, 20, 20, 20]
     }
   ],
   "destination_points_pedestrians": [
@@ -30,277 +93,277 @@
   "spawn_points_pedestrians": [
     {
       "coords": [1, 6],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 7],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 8],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 9],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 18],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 19],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 25],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 26],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 27],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 28],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 29],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 30],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 31],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 32],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [1, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [2, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [3, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [4, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [5, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [6, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [7, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [8, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [9, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [10, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [15, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [16, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [17, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [18, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [19, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [20, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [21, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [22, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [23, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [24, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [25, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [26, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [27, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [28, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [29, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [30, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [33, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [34, 33],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [46, 25],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [46, 19],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [7, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [8, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [17, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [20, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [27, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [28, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [29, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [30, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [31, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [26, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     },
     {
       "coords": [36, 1],
-      "probability": 5,
+      "probability": 3,
       "direction": [0, 1]
     }
   ],

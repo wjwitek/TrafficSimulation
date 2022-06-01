@@ -3,7 +3,6 @@ package main.java.model.spawn;
 import main.java.gui.Board;
 import main.java.gui.Coords;
 import main.java.model.Pedestrian;
-import main.java.model.spawn.SpawnPoint;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,7 +20,7 @@ public class PedestrianSpawnPoint extends SpawnPoint {
         super(new Coords(0, 0), 0, null);
         JSONArray startCoords = info.getJSONArray("coords");
         coords = new Coords(startCoords.getInt(0), startCoords.getInt(1));
-        probability = info.getInt("probability");
+        spawn_probability = info.getInt("probability");
         map = newMap;
         JSONArray startVector = info.getJSONArray("direction");
         possibleDestination = destinationArray;
@@ -30,7 +29,7 @@ public class PedestrianSpawnPoint extends SpawnPoint {
 
     @Override
     public Pedestrian get(){
-        if (getRandomNumber(0, 101) < probability){
+        if (getRandomNumber(0, 101) < spawn_probability){
             Coords dest = possibleDestination.get(getRandomNumber(0, possibleDestination.size()));
             return new Pedestrian(map, getRandomNumber(1, maxVelocity + 1), vectorOfMovement.copy(), coords.copy(),dest.copy());
         }
