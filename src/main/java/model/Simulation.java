@@ -49,11 +49,12 @@ public class Simulation {
         // move and delete cars
         ArrayList<Car> carsToDelete = new ArrayList<>();
         for (Car car: cars){
-            if (car.move()){
+            if (car.iteration()){
                 carsToDelete.add(car);
             }
         }
         for (Car car: carsToDelete){
+            map.points[car.currentPosition.x][car.currentPosition.y].hasCar = false;
             cars.remove(car);
         }
     }
