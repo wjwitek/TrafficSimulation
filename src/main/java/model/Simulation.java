@@ -38,7 +38,7 @@ public class Simulation {
         }
 
 
-        JSONArray spawnPointsPedestrianDestinationsConfigs = spawns.getJSONArray("destination_points_cars");
+        JSONArray spawnPointsPedestrianDestinationsConfigs = spawns.getJSONArray("destination_points_pedestrians");
         JSONObject info1 = (JSONObject) spawnPointsPedestrianDestinationsConfigs.get(0);
         JSONArray jsonArray = info1.getJSONArray("coords");
         for (int i = 0; i < jsonArray.length(); i++) {
