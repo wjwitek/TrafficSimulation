@@ -2,7 +2,18 @@
   "spawn_points": [
     {
       "coords": [12, 1],
-      "probability": 20
+      "probability": 20,
+      "destination": [46, 23]
+    },
+    {
+      "coords": [1, 23],
+      "probability": 10,
+      "destination": [15, 1]
+    },
+    {
+      "coords": [14, 33],
+      "probability": 30,
+      "destination": [15, 1]
     }
   ],
   "traffic_lights": [

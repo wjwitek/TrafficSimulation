@@ -6,11 +6,14 @@ import main.java.gui.Point;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class SpawnPoint {
     private Coords coords;
     private int probability;
     private Board map;
     private int maxVelocity = 4;
+    private ArrayList<Coords> possibleDestination = new ArrayList<>();
 
     public SpawnPoint(Coords startCoords, int prob, Board newMap){
         coords = startCoords;
@@ -22,6 +25,11 @@ public class SpawnPoint {
         JSONArray startCoords = info.getJSONArray("coords");
         coords = new Coords(startCoords.getInt(0), startCoords.getInt(1));
         probability = info.getInt("probability");
+        JSONArray destinationCoords = info.getJSONArray("destination");
+        for (int i=0; i<destinationCoords.length(); i += 2){
+            possibleDestination.add(new Coords(destinationCoords.getInt(i), destinationCoords.getInt(i + 1)));
+            System.out.println(destinationCoords.getInt(i) + " " + destinationCoords.getInt(i + 1));
+        }
         map = newMap;
     }
 
@@ -29,7 +37,7 @@ public class SpawnPoint {
         if (getRandomNumber(0, 101) < probability && !(map.getPointByCoords(coords).hasCar)){
             Car newCar = new Car(map, getRandomNumber(1, maxVelocity + 1), coords.copy());
             // TODO change to random generation
-            newCar.destination = new Coords(46, 23);
+            newCar.destination = possibleDestination.get(0);
             return newCar;
         }
         return null;
