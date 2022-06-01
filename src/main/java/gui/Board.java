@@ -28,6 +28,7 @@ public class Board extends JComponent implements MouseInputListener {
     public boolean showStaticField;
     Coords startingPointSF;
     private Simulation simulation;
+    private String mapSource;
 
     public Board(int length, int height, int squareSize, String mapSource) {
         simulation = new Simulation(this);
@@ -41,6 +42,7 @@ public class Board extends JComponent implements MouseInputListener {
         addMouseMotionListener(this);
         setBackground(Color.WHITE);
         setOpaque(true);
+        this.mapSource = mapSource;
         try {
             initialize(mapSource);
         } catch (IOException ex) {
@@ -330,6 +332,17 @@ public class Board extends JComponent implements MouseInputListener {
 
     public void iteration(int iteration_num) {
         simulation.iteration(iteration_num);
+        this.repaint();
+    }
+    public void restart(){
+        simulation.cars.clear();
+        simulation.pedestrians.clear();
+        try {
+            initialize(mapSource);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        calculateStaticFields();
         this.repaint();
     }
 }
