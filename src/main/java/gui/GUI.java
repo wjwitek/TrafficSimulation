@@ -241,6 +241,8 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         buttons.get(ButtonNames.StartStopSimulation).setText("Start");
         buttons.get(ButtonNames.StartStopSimulation).setActionCommand("Start");
         System.out.println("Restarting simulation");
+
+        board.restart();
         // TODO actually restart simulation
         iterNum = 0;
         frame.setTitle("Traffic simulation, iteration: " + iterNum);
