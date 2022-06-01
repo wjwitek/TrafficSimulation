@@ -17,6 +17,7 @@ public class Simulation {
     public ArrayList<SpawnPoint> spawnPointsCars = new ArrayList<>();
     public ArrayList<SpawnPoint> spawnPointsPedestrians = new ArrayList<>();
     public ArrayList<TrafficLight> trafficLights = new ArrayList<>();
+    public ArrayList<TrafficLight> trafficLightsPedestrian = new ArrayList<>();
 
     private ArrayList<Coords> destinationPedestrian = new ArrayList<>();
     private Board map;
@@ -59,6 +60,12 @@ public class Simulation {
             JSONObject info = (JSONObject) trafficLightsConfig.get(i);
             trafficLights.add(new TrafficLight(info, map));
         }
+
+        JSONArray trafficLightsPedestriansConfig = spawns.getJSONArray("traffic_lights_pedestrians");
+        for (int i = 0; i < trafficLightsPedestriansConfig.length(); i++) {
+            JSONObject info = (JSONObject) trafficLightsPedestriansConfig.get(i);
+            trafficLightsPedestrian.add(new TrafficLight(info, map));
+        }
     }
 
     public void iteration(int iteration_num) {
@@ -67,6 +74,9 @@ public class Simulation {
         map.repaint();
         // change color lights
         for (TrafficLight light : trafficLights) {
+            light.changeLight(iteration_num % lightCycleLength);
+        }
+        for (TrafficLight light : trafficLightsPedestrian) {
             light.changeLight(iteration_num % lightCycleLength);
         }
         // move and delete cars
