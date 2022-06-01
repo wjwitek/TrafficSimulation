@@ -16,7 +16,7 @@ public class Car {
     private final int maxVelocity = 4;
     private int velocity;
     private int acceleration = 1; // TODO change to function of velocity
-    protected Coords destination;
+    public Coords destination;
 
     public Car(Board newMap, int startingVelocity, Coords startingPosition){
         map = newMap;

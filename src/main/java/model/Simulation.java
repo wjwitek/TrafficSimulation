@@ -2,6 +2,8 @@ package main.java.model;
 
 import main.java.gui.Board;
 import main.java.gui.Coords;
+import main.java.model.spawn.CarSpawnPoint;
+import main.java.model.spawn.PedestrianSpawnPoint;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -14,8 +16,8 @@ public class Simulation {
     private final int lightCycleLength = 120; // TODO move to simulation_config.json
     public ArrayList<Car> cars = new ArrayList<>();
     public ArrayList<Pedestrian> pedestrians = new ArrayList<>();
-    public ArrayList<SpawnPoint> spawnPointsCars = new ArrayList<>();
-    public ArrayList<SpawnPoint> spawnPointsPedestrians = new ArrayList<>();
+    public ArrayList<CarSpawnPoint> spawnPointsCars = new ArrayList<>();
+    public ArrayList<PedestrianSpawnPoint> spawnPointsPedestrians = new ArrayList<>();
     public ArrayList<TrafficLight> trafficLights = new ArrayList<>();
     public ArrayList<TrafficLight> trafficLightsPedestrian = new ArrayList<>();
 
@@ -34,7 +36,7 @@ public class Simulation {
         JSONArray spawnPointsCarsConfigs = spawns.getJSONArray("spawn_points_cars");
         for (int i = 0; i < spawnPointsCarsConfigs.length(); i++) {
             JSONObject info = (JSONObject) spawnPointsCarsConfigs.get(i);
-            spawnPointsCars.add(new SpawnPoint(info, map));
+            spawnPointsCars.add(new CarSpawnPoint(info, map));
         }
 
 
@@ -50,7 +52,7 @@ public class Simulation {
         JSONArray spawnPointsPedestriansConfigs = spawns.getJSONArray("spawn_points_pedestrians");
         for (int i = 0; i < spawnPointsPedestriansConfigs.length(); i++) {
             JSONObject info = (JSONObject) spawnPointsPedestriansConfigs.get(i);
-            spawnPointsPedestrians.add(new SpawnPoint(info, map, destinationPedestrian));
+            spawnPointsPedestrians.add(new PedestrianSpawnPoint(info, map, destinationPedestrian));
         }
 
 
@@ -103,8 +105,8 @@ public class Simulation {
     }
 
     public void newCars() {
-        for (SpawnPoint spawn : spawnPointsCars) {
-            Car newCar = spawn.getCar();
+        for (CarSpawnPoint spawn : spawnPointsCars) {
+            Car newCar = spawn.get();
             if (newCar != null) {
                 cars.add(newCar);
             }
@@ -112,8 +114,8 @@ public class Simulation {
     }
 
     public void newPedestrian() {
-        for (SpawnPoint spawn : spawnPointsPedestrians) {
-            Pedestrian pedestrian = spawn.getPedestrian();
+        for (PedestrianSpawnPoint spawn : spawnPointsPedestrians) {
+            Pedestrian pedestrian = spawn.get();
             if (pedestrian != null) {
                 pedestrians.add(pedestrian);
             }
