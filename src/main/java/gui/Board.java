@@ -321,4 +321,8 @@ public class Board extends JComponent implements MouseInputListener {
         simulation.iteration(iteration_num);
         this.repaint();
     }
+
+    public Point getPointByCoords(Coords coords){
+        return points[coords.x][coords.y];
+    }
 }
