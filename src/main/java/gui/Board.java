@@ -264,8 +264,16 @@ public class Board extends JComponent implements MouseInputListener {
             for (y = 1; y < points[x].length - 1; ++y) {
                 if (points[x][y].hasCar) {
                     g.setColor(Color.CYAN); //TODO change to pulling color from car or something
-                } else if (points[x][y].hasPedestrian) {
-                    g.setColor(Color.ORANGE);
+                } else if (points[x][y].hasPedestrian != 0) {
+                    switch (points[x][y].hasPedestrian){
+                        case 1 -> g.setColor(new Color(200,200,150));
+                        case 2 -> g.setColor(new Color(200,200,120));
+                        case 3 -> g.setColor(new Color(200,200,90));
+                        case 4 -> g.setColor(new Color(200,200,40));
+                        case 5 -> g.setColor(new Color(200,200,0));
+                        case 6 -> g.setColor(new Color(220,220,0));
+                        default -> g.setColor(new Color(250,250,0));
+                    }
                 } else {
                     g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
                 }
