@@ -28,6 +28,7 @@ public class Board extends JComponent implements MouseInputListener {
     public boolean showStaticField;
     Coords startingPointSF;
     private Simulation simulation;
+    private String mapSource;
 
     public Board(int length, int height, int squareSize, String mapSource) {
         simulation = new Simulation(this);
@@ -41,6 +42,7 @@ public class Board extends JComponent implements MouseInputListener {
         addMouseMotionListener(this);
         setBackground(Color.WHITE);
         setOpaque(true);
+        this.mapSource = mapSource;
         try {
             initialize(mapSource);
         } catch (IOException ex) {
@@ -142,7 +144,8 @@ public class Board extends JComponent implements MouseInputListener {
                             current.type == Subsoil.underground_pavement ||
                             current.type == Subsoil.underground_street ||
                             current.type == Subsoil.underground_unavailable ||
-                            current.type == Subsoil.lights) {
+                            current.type == Subsoil.lights_pedestrians_red ||
+                            current.type == Subsoil.lights_pedestrians_green) {
                         if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
                             field[current.x][current.y] = field[tmp.x][tmp.y] + 1;
                             updated = true;
@@ -161,7 +164,8 @@ public class Board extends JComponent implements MouseInputListener {
                                 tmp.type == Subsoil.underground_pavement ||
                                 tmp.type == Subsoil.underground_street ||
                                 tmp.type == Subsoil.underground_unavailable ||
-                                tmp.type == Subsoil.lights) {
+                                tmp.type == Subsoil.lights_pedestrians_red ||
+                                tmp.type == Subsoil.lights_pedestrians_green) {
                             toCheck.add(tmp);
                         }
                     }
@@ -328,6 +332,17 @@ public class Board extends JComponent implements MouseInputListener {
 
     public void iteration(int iteration_num) {
         simulation.iteration(iteration_num);
+        this.repaint();
+    }
+    public void restart(){
+        simulation.cars.clear();
+        simulation.pedestrians.clear();
+        try {
+            initialize(mapSource);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        calculateStaticFields();
         this.repaint();
     }
 }

@@ -12,7 +12,7 @@ public enum Subsoil {
     underground_street (7),
     underground_unavailable (8),
     underground_pavement (9),
-    lights       (6),
+    lights_pedestrians_red       (6),
     streetN      (10),
     streetE      (11),
     streetS      (12),
@@ -22,7 +22,8 @@ public enum Subsoil {
     crossingS    (18),
     crossingW    (19),
     lights_cars_red(14),
-    lights_cars_green(15);
+    lights_cars_green(15),
+    lights_pedestrians_green (20);
 
 
     private final int intValue;
@@ -40,7 +41,7 @@ public enum Subsoil {
             case 3 -> crossing;
             case 4 -> unavailable;
             case 5 -> underground;
-            case 6 -> lights;
+            case 6 -> lights_pedestrians_red;
             case 7 -> underground_street;
             case 8 -> underground_unavailable;
             case 9 -> underground_pavement;
@@ -54,13 +55,14 @@ public enum Subsoil {
             case 19 -> crossingW;
             case 14 -> lights_cars_red;
             case 15 -> lights_cars_green;
+            case 20 -> lights_pedestrians_green;
             default -> unavailable;
         };
     }
     public static Color getColor(Subsoil s){
         return switch (s) {
             case empty -> new Color(1.0f, 1.0f, 1.0f, 1.0f);
-            case pavement -> new Color(0.2f, 0.8f, 0.2f, 0.7f);
+            case pavement -> new Color(0.2f, 0.6f, 0.2f, 0.7f);
             case street -> new Color(0.3f, 0.3f, 0.3f, 0.7f);
             case crossing -> new Color(0.6f, 0.6f, 0.6f, 0.7f);
             case unavailable -> new Color(0.0f, 0.0f, 0.0f, 1.0f);
@@ -78,8 +80,10 @@ public enum Subsoil {
             case crossingW -> new Color(0.6f, 0.6f, 0.6f, 0.9f);
 //             case lights_cars -> new Color(0.8f, 0.0f, 0.0f, 0.7f);
             case lights_cars_red -> new Color(0.8f, 0.0f, 0.0f, 0.7f);
-            case lights -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
+//            case lights -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
             case lights_cars_green -> new Color(55, 253, 18);
+            case lights_pedestrians_green -> new Color(0.3f, 0.9f, 0.0f, 0.7f);
+            case lights_pedestrians_red -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
         };
     }
 }
