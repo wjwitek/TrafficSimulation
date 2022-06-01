@@ -28,6 +28,7 @@ public class Board extends JComponent implements MouseInputListener {
     public boolean showStaticField;
     Coords startingPointSF;
     private Simulation simulation;
+    private String mapSource;
 
     public Board(int length, int height, int squareSize, String mapSource) {
         simulation = new Simulation(this);
@@ -41,6 +42,7 @@ public class Board extends JComponent implements MouseInputListener {
         addMouseMotionListener(this);
         setBackground(Color.WHITE);
         setOpaque(true);
+        this.mapSource = mapSource;
         try {
             initialize(mapSource);
         } catch (IOException ex) {
@@ -63,12 +65,12 @@ public class Board extends JComponent implements MouseInputListener {
             for (int y = 0; y < points[x].length; ++y)
                 points[x][y] = new Point(x, y, this);
 
-        for (int x = 1; x < points.length-1; ++x) {
-            for (int y = 1; y < points[x].length-1; ++y) {
-                for (int dx = -1; dx<= 1; ++dx) {
+        for (int x = 1; x < points.length - 1; ++x) {
+            for (int y = 1; y < points[x].length - 1; ++y) {
+                for (int dx = -1; dx <= 1; ++dx) {
                     for (int dy = -1; dy <= 1; ++dy) {
-                        if(!(dx==0 && dy==0) && dx*dy==0)
-                            points[x][y].addNeighbor(points[x+dx][y+dy]);
+                        if (!(dx == 0 && dy == 0) && dx * dy == 0)
+                            points[x][y].addNeighbor(points[x + dx][y + dy]);
                     }
                 }
             }
@@ -78,27 +80,28 @@ public class Board extends JComponent implements MouseInputListener {
         BufferedReader bufferedreader = new BufferedReader(filereader);
         String line = bufferedreader.readLine();
         while (line != null) {
-            int x = 0, y = 0, idx=0;
-            while(idx< line.length()){
+            int x = 0, y = 0, idx = 0;
+            while (idx < line.length()) {
                 StringBuilder S = new StringBuilder();
-                while(line.charAt(idx)>='0' && line.charAt(idx)<='9' &&(y<points.length-1 && x<points[0].length-1)){
+                while (line.charAt(idx) >= '0' && line.charAt(idx) <= '9' && (y < points.length - 1 && x < points[0].length - 1)) {
                     S.append(line.charAt(idx));
                     idx++;
                 }
-                if(!S.toString().equals("")){
+                if (!S.toString().equals("")) {
                     points[y][x].type = Subsoil.fromInt(Integer.parseInt(S.toString()));
                 }
-                if(line.charAt(idx)==']') {
+                if (line.charAt(idx) == ']') {
                     y += 1;
-                    x=-1;
+                    x = -1;
                 }
-                if(line.charAt(idx)==',')
-                    x+=1;
+                if (line.charAt(idx) == ',')
+                    x += 1;
                 idx++;
             }
             line = bufferedreader.readLine();
         }
     }
+
     protected void paintComponent(Graphics g) {
         if (isOpaque()) {
             g.setColor(getBackground());
@@ -108,22 +111,22 @@ public class Board extends JComponent implements MouseInputListener {
         drawNetting(g, size);
     }
 
-    private void calculateStaticFields(){
-        for(int x=0;x< length;x++){
-            for(int y=0;y<height;y++){
+    private void calculateStaticFields() {
+        for (int x = 0; x < length; x++) {
+            for (int y = 0; y < height; y++) {
                 calculateStaticField(new Coords(x, y));
             }
         }
     }
 
-    private void calculateStaticField(Coords coords){
+    private void calculateStaticField(Coords coords) {
         Integer[][] field = new Integer[length][length];
-        for(int x=0;x< length;x++)
-            for(int y=0;y<height;y++)
-                field[x][y]=unreachable;
+        for (int x = 0; x < length; x++)
+            for (int y = 0; y < height; y++)
+                field[x][y] = unreachable;
         field[coords.x][coords.y] = 0;
 
-        if(points[coords.x][coords.y].type==Subsoil.pavement) {
+        if (points[coords.x][coords.y].type == Subsoil.pavement) {
             ArrayList<Point> toCheck = new ArrayList<>();
             toCheck.add(points[coords.x][coords.y]);
             while (!toCheck.isEmpty()) {
@@ -131,17 +134,18 @@ public class Board extends JComponent implements MouseInputListener {
                 boolean updated = field[current.x][current.y] == 0;
 
                 for (Point tmp : current.neighbors) {
-                    if (    current.type == Subsoil.pavement ||
+                    if (current.type == Subsoil.pavement ||
                             current.type == Subsoil.crossing ||
                             current.type == Subsoil.crossingE ||
                             current.type == Subsoil.crossingN ||
                             current.type == Subsoil.crossingS ||
                             current.type == Subsoil.crossingW ||
-                            current.type == Subsoil.underground||
+                            current.type == Subsoil.underground ||
                             current.type == Subsoil.underground_pavement ||
                             current.type == Subsoil.underground_street ||
                             current.type == Subsoil.underground_unavailable ||
-                            current.type == Subsoil.lights) {
+                            current.type == Subsoil.lights_pedestrians_red ||
+                            current.type == Subsoil.lights_pedestrians_green) {
                         if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
                             field[current.x][current.y] = field[tmp.x][tmp.y] + 1;
                             updated = true;
@@ -150,35 +154,35 @@ public class Board extends JComponent implements MouseInputListener {
                 }
                 if (updated) {
                     for (Point tmp : current.neighbors) {
-                        if (    tmp.type == Subsoil.pavement ||
+                        if (tmp.type == Subsoil.pavement ||
                                 tmp.type == Subsoil.crossing ||
                                 tmp.type == Subsoil.crossingE ||
                                 tmp.type == Subsoil.crossingN ||
                                 tmp.type == Subsoil.crossingS ||
                                 tmp.type == Subsoil.crossingW ||
-                                tmp.type == Subsoil.underground||
+                                tmp.type == Subsoil.underground ||
                                 tmp.type == Subsoil.underground_pavement ||
                                 tmp.type == Subsoil.underground_street ||
                                 tmp.type == Subsoil.underground_unavailable ||
-                                tmp.type == Subsoil.lights) {
+                                tmp.type == Subsoil.lights_pedestrians_red ||
+                                tmp.type == Subsoil.lights_pedestrians_green) {
                             toCheck.add(tmp);
                         }
                     }
                 }
             }
-        }
-        else if(points[coords.x][coords.y].type==Subsoil.street||
-                points[coords.x][coords.y].type==Subsoil.streetN||
-                points[coords.x][coords.y].type==Subsoil.streetE||
-                points[coords.x][coords.y].type==Subsoil.streetS||
-                points[coords.x][coords.y].type==Subsoil.streetW){
+        } else if (points[coords.x][coords.y].type == Subsoil.street ||
+                points[coords.x][coords.y].type == Subsoil.streetN ||
+                points[coords.x][coords.y].type == Subsoil.streetE ||
+                points[coords.x][coords.y].type == Subsoil.streetS ||
+                points[coords.x][coords.y].type == Subsoil.streetW) {
             ArrayList<Point> toCheck = new ArrayList<>();
             toCheck.add(points[coords.x][coords.y]);
             while (!toCheck.isEmpty()) {
                 Point current = toCheck.remove(0);
                 boolean updated = field[current.x][current.y] == 0;
                 for (Point tmp : current.neighbors) {
-                    if (    current.type == Subsoil.street ||
+                    if (current.type == Subsoil.street ||
 //                            current.type == Subsoil.crossing ||
                             current.type == Subsoil.crossingE && tmp.x > current.x ||
                             current.type == Subsoil.crossingN && tmp.y < current.y ||
@@ -199,7 +203,7 @@ public class Board extends JComponent implements MouseInputListener {
                 }
                 if (updated) {
                     for (Point tmp : current.neighbors) {
-                        if (    tmp.type == Subsoil.street ||
+                        if (tmp.type == Subsoil.street ||
                                 tmp.type == Subsoil.crossing ||
                                 tmp.type == Subsoil.crossingE ||
                                 tmp.type == Subsoil.crossingN ||
@@ -223,15 +227,15 @@ public class Board extends JComponent implements MouseInputListener {
             }
         }
         float maxField = 0;
-        for(int x= 1;x< length-1;x++) {
-            for (int y = 1; y < height-1; y++) {
+        for (int x = 1; x < length - 1; x++) {
+            for (int y = 1; y < height - 1; y++) {
                 points[x][y].addField(coords, field[x][y]);
-                if(field[x][y]!=unreachable)
+                if (field[x][y] != unreachable)
                     maxField = max(maxField, field[x][y]);
             }
         }
-        for(int x= 1;x< length-1;x++) {
-            for (int y = 1; y < height-1; y++) {
+        for (int x = 1; x < length - 1; x++) {
+            for (int y = 1; y < height - 1; y++) {
                 points[x][y].addMaxField(coords, maxField);
             }
         }
@@ -239,10 +243,10 @@ public class Board extends JComponent implements MouseInputListener {
 
     private void drawNetting(Graphics g, int gridSpace) {
         Insets insets = getInsets();
-        int firstX = insets.left+gridSpace;
-        int firstY = insets.top+gridSpace;
-        int lastX=firstX+(length-2)*size;
-        int lastY=firstY+(height-2)*size;
+        int firstX = insets.left + gridSpace;
+        int firstY = insets.top + gridSpace;
+        int lastX = firstX + (length - 2) * size;
+        int lastY = firstY + (height - 2) * size;
 
         int x = firstX;
         while (x < lastX) {
@@ -256,12 +260,13 @@ public class Board extends JComponent implements MouseInputListener {
             y += gridSpace;
         }
 
-        for (x = 1; x < points.length-1; ++x) {
-            for (y = 1; y < points[x].length-1; ++y) {
-                if (points[x][y].hasCar){
+        for (x = 1; x < points.length - 1; ++x) {
+            for (y = 1; y < points[x].length - 1; ++y) {
+                if (points[x][y].hasCar) {
                     g.setColor(Color.CYAN); //TODO change to pulling color from car or something
-                }
-                else{
+                } else if (points[x][y].hasPedestrian) {
+                    g.setColor(Color.ORANGE);
+                } else {
                     g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
                 }
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
@@ -273,54 +278,74 @@ public class Board extends JComponent implements MouseInputListener {
     public void mouseClicked(MouseEvent e) {
         int x = e.getX() / size;
         int y = e.getY() / size;
-        if (mode){
+        if (mode) {
 //            int x = e.getX() / size;
 //            int y = e.getY() / size;
             if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
-                if(rectangleMode==2){
-                    rectangleCorner = new Coords(x,y);
+                if (rectangleMode == 2) {
+                    rectangleCorner = new Coords(x, y);
                     rectangleMode--;
-                }else if(rectangleMode==1){
+                } else if (rectangleMode == 1) {
                     Coords rectangleCorner2 = new Coords(x, y);
                     rectangleMode++;
-                    for(int i = min(rectangleCorner.x, rectangleCorner2.x); i<=max(rectangleCorner.x, rectangleCorner2.x); i++){
-                        for(int j = min(rectangleCorner.y, rectangleCorner2.y); j<=max(rectangleCorner.y, rectangleCorner2.y); j++){
-                            points[i][j].type=editType;
+                    for (int i = min(rectangleCorner.x, rectangleCorner2.x); i <= max(rectangleCorner.x, rectangleCorner2.x); i++) {
+                        for (int j = min(rectangleCorner.y, rectangleCorner2.y); j <= max(rectangleCorner.y, rectangleCorner2.y); j++) {
+                            points[i][j].type = editType;
                         }
                     }
                 }
-                points[x][y].type= editType;
+                points[x][y].type = editType;
                 this.repaint();
             }
-        }
-        else if(modeSF){
-            startingPointSF.change(x,y);
+        } else if (modeSF) {
+            startingPointSF.change(x, y);
             showStaticField = !showStaticField;
             repaint();
         }
     }
 
     public void mouseDragged(MouseEvent e) {
-        if (mode){
+        if (mode) {
             int x = e.getX() / size;
             int y = e.getY() / size;
             if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
-                points[x][y].type= editType;
+                points[x][y].type = editType;
                 this.repaint();
             }
         }
     }
 
-    public void mouseExited(MouseEvent e) {}
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e) {}
-    public void mouseMoved(MouseEvent e) {}
-    public void mousePressed(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 
-    public void iteration(int iteration_num){
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    public void mousePressed(MouseEvent e) {
+    }
+
+    public void iteration(int iteration_num) {
         simulation.iteration(iteration_num);
         this.repaint();
     }
+  
+    public void restart(){
+        simulation.cars.clear();
+        simulation.pedestrians.clear();
+        try {
+            initialize(mapSource);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        calculateStaticFields();
+        this.repaint();
+
 
     public Point getPointByCoords(Coords coords){
         return points[coords.x][coords.y];

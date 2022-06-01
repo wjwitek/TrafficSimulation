@@ -1,5 +1,5 @@
 {
-  "spawn_points": [
+  "spawn_points_cars": [
     {
       "coords": [12, 1],
       "probability": 20,
@@ -14,6 +14,294 @@
       "coords": [14, 33],
       "probability": 30,
       "destination": [15, 1]
+    }
+  ],
+  "destination_points_pedestrians": [
+    {
+      "coords": [[1, 6],[1, 7],[1, 8],[1, 9],[1, 18], [1, 19],[1, 25],[1, 26],[1, 27],
+        [1, 28],[1, 29],[1, 30],[1, 31],[1, 32],[1, 33],[2, 33],[3, 33],[4, 33],[5, 33],
+        [6, 33],[7, 33],[8, 33],[9, 33],[10, 33],[15, 33],[16, 33],[17, 33],[18, 33],[19, 33],
+        [20, 33],[21, 33],[22, 33],[23, 33],[24, 33],[25, 33],[26, 33],[27, 33],[28, 33],[29, 33],
+        [30, 33],[33, 33],[34, 33],[17, 33],[46, 25],[46, 19],[7, 1],[8, 1],[17, 1],[20, 1],[27, 1],
+        [28, 1],[29, 1],[30, 1],[31, 1],[26, 1],[36, 1]
+      ]
+    }
+  ],
+  "spawn_points_pedestrians": [
+    {
+      "coords": [1, 6],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 7],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 8],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 9],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 18],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 19],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 25],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 26],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 27],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 28],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 29],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 30],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 31],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 32],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [1, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [2, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [3, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [4, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [5, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [6, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [7, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [8, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [9, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [10, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [15, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [16, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [17, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [18, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [19, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [20, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [21, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [22, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [23, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [24, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [25, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [26, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [27, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [28, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [29, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [30, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [33, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [34, 33],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [46, 25],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [46, 19],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [7, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [8, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [17, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [20, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [27, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [28, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [29, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [30, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [31, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [26, 1],
+      "probability": 5,
+      "direction": [0, 1]
+    },
+    {
+      "coords": [36, 1],
+      "probability": 5,
+      "direction": [0, 1]
     }
   ],
   "traffic_lights": [
@@ -56,6 +344,56 @@
     {
       "coords": [14, 29],
       "sequence": [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 14, 14, 14, 14, 14, 14, 14, 14]
+    }
+  ],
+  "traffic_lights_pedestrians": [
+    {
+      "coords": [6, 19],
+      "sequence": [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6]
+    },
+    {
+      "coords": [7, 19],
+      "sequence": [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6]
+    },
+    {
+      "coords": [6, 25],
+      "sequence": [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6]
+    },
+    {
+      "coords": [7, 25],
+      "sequence": [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6]
+    },
+    {
+      "coords": [19, 19],
+      "sequence": [6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6]
+    },
+    {
+      "coords": [20, 19],
+      "sequence": [6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6]
+    },
+    {
+      "coords": [19, 25],
+      "sequence": [6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6]
+    },
+    {
+      "coords": [20, 25],
+      "sequence": [6, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 6, 6, 6, 6, 6, 6, 6]
+    },
+    {
+      "coords": [10, 27],
+      "sequence": [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 20, 20, 20, 6]
+    },
+    {
+      "coords": [10, 28],
+      "sequence": [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 20, 20, 20, 6]
+    },
+    {
+      "coords": [15, 27],
+      "sequence": [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 20, 20, 20, 6]
+    },
+    {
+      "coords": [15, 28],
+      "sequence": [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 20, 20, 20, 6]
     }
   ]
 }
