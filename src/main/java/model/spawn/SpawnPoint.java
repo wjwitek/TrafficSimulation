@@ -10,19 +10,20 @@ public class SpawnPoint {
     protected int spawn_probability;
     protected Board map;
     protected int maxVelocity;
-    protected ArrayList<Coords> possibleDestination = new ArrayList<>();
+    protected ArrayList<Coords> possibleDestination;
 
-    public SpawnPoint(Coords newCoords, int prob, Board newMap){
+    public SpawnPoint(Coords newCoords, int prob, Board newMap, ArrayList<Coords> destinationArray){
         coords = newCoords;
         spawn_probability = prob;
         map = newMap;
+        possibleDestination = destinationArray;
     }
 
     public Object get(){
         return null;
     }
 
-    public int getRandomNumber(int min, int max) {
+    public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
 }

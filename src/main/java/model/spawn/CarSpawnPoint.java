@@ -12,7 +12,7 @@ public class CarSpawnPoint extends SpawnPoint {
     private final ArrayList<Integer> possibleDestinationProbability = new ArrayList<>();
     private ArrayList<Car> queue = new ArrayList<>();
     public CarSpawnPoint(JSONObject info, Board newMap){
-        super(new Coords(0, 0), 0, null);
+        super(new Coords(0, 0), 0, newMap, new ArrayList<>());
         maxVelocity = 4; //TODO changeable
         JSONArray startCoords = info.getJSONArray("coords");
         coords = new Coords(startCoords.getInt(0), startCoords.getInt(1));
@@ -25,7 +25,7 @@ public class CarSpawnPoint extends SpawnPoint {
 //            System.out.println(destinationCoords.getInt(i) + " " + destinationCoords.getInt(i + 1) + "; "
 //                    + destinationCoordsProbability.getInt(i/2));
         }
-        map = newMap;
+//        map = newMap;
     }
 
     public Car get(){
