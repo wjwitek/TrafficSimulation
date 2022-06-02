@@ -47,7 +47,7 @@ public class Pedestrian {
         for (Point point : neighborsPedestrian) {
             if (map.points[point.x][point.y].fields.containsKey(destinationPosition) &&
                     (map.points[point.x][point.y].type != Subsoil.lights_pedestrians_red || isOnStreetInFrontOfLights(point)) &&
-                    !(can_go == 1 && Subsoil.lights_pedestrians_green_blinking == map.points[point.x][point.y].type)) {
+                    (!(can_go == 1 && Subsoil.lights_pedestrians_green_blinking == map.points[point.x][point.y].type)|| isOnStreetInFrontOfLights(point))) {
                 if (minNeighboursStaticFiled > map.points[point.x][point.y].fields.get(destinationPosition)) {
                     minNeighboursStaticFiled = map.points[point.x][point.y].fields.get(destinationPosition);
                     allNextPosition = new ArrayList<>();
