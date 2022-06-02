@@ -31,7 +31,7 @@ public class PedestrianSpawnPoint extends SpawnPoint {
     public Pedestrian get(){
         if (getRandomNumber(0, 101) < spawn_probability){
             Coords dest = possibleDestination.get(getRandomNumber(0, possibleDestination.size()));
-            return new Pedestrian(map, getRandomNumber(1, maxVelocity + 1), vectorOfMovement.copy(), coords.copy(),dest.copy());
+            return new Pedestrian(map, 1, vectorOfMovement.copy(), coords.copy(),dest.copy());
         }
         return null;
     }

@@ -13,12 +13,15 @@ public class Pedestrian {
     public Coords currentPosition;
     private Coords vectorOfMovement; // [left-right, up-down]
     private Board map;
-    private final int maxVelocity = 2;
+    private final int maxVelocity = 1;
     private int maxDistanceFromEnd;
     public boolean changeLeft = false;
     public boolean changeRight = false;
     private int velocity;
+
+    private int can_go = 1;
     private final Coords destinationPosition;
+
     public Pedestrian(Board newMap, int startingVelocity, Coords directionOfMovement, Coords startingPosition, Coords endPosition) {
         map = newMap;
         map.points[startingPosition.x][startingPosition.y].hasPedestrian += 1;
@@ -38,17 +41,19 @@ public class Pedestrian {
         ArrayList<Point> neighborsPedestrian = map.points[currentPosition.x][currentPosition.y].neighbors;
         ArrayList<Coords> allNextPosition = new ArrayList<>();
         Coords nextPosition = currentPosition;
-        //Coords nextPosition = currentPosition;
+        boolean onStreet = false;
         map.points[currentPosition.x][currentPosition.y].hasPedestrian -= 1;
         int minNeighboursStaticFiled = map.points[currentPosition.x][currentPosition.y].fields.get(destinationPosition);
         for (Point point : neighborsPedestrian) {
             if (map.points[point.x][point.y].fields.containsKey(destinationPosition) &&
-                    map.points[point.x][point.y].type != Subsoil.lights_pedestrians_red) {
+                    (map.points[point.x][point.y].type != Subsoil.lights_pedestrians_red || isOnStreetInFrontOfLights(point)) &&
+                    !(can_go == 1 && Subsoil.lights_pedestrians_green_blinking == map.points[point.x][point.y].type)) {
                 if (minNeighboursStaticFiled > map.points[point.x][point.y].fields.get(destinationPosition)) {
                     minNeighboursStaticFiled = map.points[point.x][point.y].fields.get(destinationPosition);
                     allNextPosition = new ArrayList<>();
                     allNextPosition.add(new Coords(point.x, point.y));
-                } else if(minNeighboursStaticFiled == map.points[point.x][point.y].fields.get(destinationPosition)){
+                    onStreet = isOnStreetInFrontOfLights(point);
+                } else if (minNeighboursStaticFiled == map.points[point.x][point.y].fields.get(destinationPosition)) {
                     allNextPosition.add(new Coords(point.x, point.y));
                 }
             }
@@ -56,7 +61,10 @@ public class Pedestrian {
         if (!allNextPosition.isEmpty()) {
             nextPosition = allNextPosition.get(getRandomNumber(0, allNextPosition.size()));
         }
+
         currentPosition.change(nextPosition.x, nextPosition.y);
+        if (map.points[currentPosition.x][currentPosition.y].type == Subsoil.lights_pedestrians_green || onStreet) can_go = (can_go + 1) % 2;
+        if (map.points[currentPosition.x][currentPosition.y].type == Subsoil.lights_pedestrians_green_blinking) can_go = 1;
 
         if (outOfBounds()) {
             // signals to the simulation that car should be deleted
@@ -64,6 +72,11 @@ public class Pedestrian {
         }
         map.points[currentPosition.x][currentPosition.y].hasPedestrian += 1;
         return false;
+    }
+
+
+    private boolean isOnStreetInFrontOfLights(Point point){
+        return map.points[currentPosition.x][currentPosition.y].type != Subsoil.pavement && map.points[point.x][point.y].type == Subsoil.lights_pedestrians_red;
     }
 
     private boolean outOfBounds() {
