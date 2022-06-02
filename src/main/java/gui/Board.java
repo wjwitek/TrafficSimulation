@@ -1,5 +1,6 @@
 package main.java.gui;
 
+import main.java.model.Car;
 import main.java.model.Simulation;
 
 import javax.swing.*;
@@ -143,6 +144,8 @@ public class Board extends JComponent implements MouseInputListener {
                             current.type == Subsoil.underground ||
                             current.type == Subsoil.underground_pavement ||
                             current.type == Subsoil.underground_street ||
+                            current.type == Subsoil.underground_streetS ||
+                            current.type == Subsoil.underground_streetN ||
                             current.type == Subsoil.underground_unavailable ||
                             current.type == Subsoil.lights_pedestrians_red ||
                             current.type == Subsoil.lights_pedestrians_green) {
@@ -163,6 +166,8 @@ public class Board extends JComponent implements MouseInputListener {
                                 tmp.type == Subsoil.underground ||
                                 tmp.type == Subsoil.underground_pavement ||
                                 tmp.type == Subsoil.underground_street ||
+                                tmp.type == Subsoil.underground_streetS ||
+                                tmp.type == Subsoil.underground_streetN ||
                                 tmp.type == Subsoil.underground_unavailable ||
                                 tmp.type == Subsoil.lights_pedestrians_red ||
                                 tmp.type == Subsoil.lights_pedestrians_green) {
@@ -192,7 +197,9 @@ public class Board extends JComponent implements MouseInputListener {
                             current.type == Subsoil.streetN && tmp.y < current.y ||
                             current.type == Subsoil.streetS && tmp.y > current.y ||
                             current.type == Subsoil.streetW && tmp.x < current.x ||
-                            current.type == Subsoil.underground_street ||
+//                            current.type == Subsoil.underground_street ||
+                            current.type == Subsoil.underground_streetS && tmp.y > current.y ||
+                            current.type == Subsoil.underground_streetN && tmp.y < current.y ||
                             current.type == Subsoil.lights_cars_green ||
                             current.type == Subsoil.lights_cars_red) {
                         if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
@@ -218,6 +225,8 @@ public class Board extends JComponent implements MouseInputListener {
 //                                tmp.type == Subsoil.streetS && tmp.y > current.y ||
 //                                tmp.type == Subsoil.streetW && tmp.x > current.x ||
                                 tmp.type == Subsoil.underground_street ||
+                                tmp.type == Subsoil.underground_streetS ||
+                                tmp.type == Subsoil.underground_streetN ||
                                 tmp.type == Subsoil.lights_cars_green ||
                                 tmp.type == Subsoil.lights_cars_red) {
                             toCheck.add(tmp);
@@ -262,17 +271,37 @@ public class Board extends JComponent implements MouseInputListener {
 
         for (x = 1; x < points.length - 1; ++x) {
             for (y = 1; y < points[x].length - 1; ++y) {
-                if (points[x][y].hasCar) {
-                    g.setColor(Color.CYAN); //TODO change to pulling color from car or something
-                } else if (points[x][y].hasPedestrian) {
-                    g.setColor(Color.ORANGE);
-                } else {
-                    g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
-                }
+                g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
+                if (points[x][y].hasPedestrian != 0) {
+                    g.setColor(new Color(250,250,0));
+                    if(points[x][y].hasPedestrian <= 6) {
+                        int n = points[x][y].hasPedestrian;
+                        g.fillRect((x * size) + 1 + 2 + 6 - n, (y * size) + 1 + 2 + 6 - n,
+                                (size - 1 - 4 - 12 + n * 2), (size - 1 - 4 - 12 + n * 2));
+                    }
+                    else
+                        g.fillRect((x * size) + 3, (y * size) + 3, (size - 5), (size - 5));
+                }
             }
         }
-
+        for(Car c : simulation.cars){ //TODO color of cars
+            int _x = c.currentPosition.x;
+            int _y = c.currentPosition.y;
+            if(c.destination.x==1){
+                g.setColor(new Color(108, 137, 255));
+            }
+            else if(c.destination.y==1){
+                g.setColor(new Color(83, 208, 170));
+            }
+            else if(c.destination.x==46){
+                g.setColor(new Color(12, 159, 62));
+            }
+            else if(c.destination.y==33){
+                g.setColor(new Color(142, 17, 204));
+            }
+            g.fillRect((_x * size) + 3, (_y * size) + 3, (size - 5), (size - 5));
+        }
     }
 
     public void mouseClicked(MouseEvent e) {

@@ -100,6 +100,7 @@ public class Simulation {
             }
         }
         for (Pedestrian pedestrian : pedestriansToDelete) {
+            map.points[pedestrian.currentPosition.x][pedestrian.currentPosition.y].hasPedestrian--;
             pedestrians.remove(pedestrian);
         }
     }
