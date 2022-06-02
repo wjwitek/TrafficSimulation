@@ -1,5 +1,6 @@
 package main.java.gui;
 
+import main.java.model.Car;
 import main.java.model.Simulation;
 
 import javax.swing.*;
@@ -288,7 +289,23 @@ public class Board extends JComponent implements MouseInputListener {
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
             }
         }
-
+        for(Car c : simulation.cars){
+            int _x = c.currentPosition.x;
+            int _y = c.currentPosition.y;
+            if(c.destination.x==1){
+                g.setColor(new Color(108, 137, 255));
+            }
+            else if(c.destination.y==1){
+                g.setColor(new Color(83, 208, 170));
+            }
+            else if(c.destination.x==46){
+                g.setColor(new Color(12, 159, 62));
+            }
+            else if(c.destination.y==33){
+                g.setColor(new Color(142, 17, 204));
+            }
+            g.fillRect((_x * size) + 1, (_y * size) + 1, (size - 1), (size - 1));
+        }
     }
 
     public void mouseClicked(MouseEvent e) {
