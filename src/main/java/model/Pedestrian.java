@@ -13,7 +13,7 @@ public class Pedestrian {
     public Coords currentPosition;
     private Coords vectorOfMovement; // [left-right, up-down]
     private Board map;
-    private final int maxVelocity = 1;
+    private final int maxVelocity = 2;
     private int maxDistanceFromEnd;
     public boolean changeLeft = false;
     public boolean changeRight = false;
