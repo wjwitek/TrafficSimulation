@@ -271,25 +271,21 @@ public class Board extends JComponent implements MouseInputListener {
 
         for (x = 1; x < points.length - 1; ++x) {
             for (y = 1; y < points[x].length - 1; ++y) {
-                if (points[x][y].hasCar) {
-                    g.setColor(Color.CYAN); //TODO change to pulling color from car or something
-                } else if (points[x][y].hasPedestrian != 0) {
-                    switch (points[x][y].hasPedestrian){
-                        case 1 -> g.setColor(new Color(200,200,150));
-                        case 2 -> g.setColor(new Color(200,200,120));
-                        case 3 -> g.setColor(new Color(200,200,90));
-                        case 4 -> g.setColor(new Color(200,200,40));
-                        case 5 -> g.setColor(new Color(200,200,0));
-                        case 6 -> g.setColor(new Color(220,220,0));
-                        default -> g.setColor(new Color(250,250,0));
-                    }
-                } else {
-                    g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
-                }
+                g.setColor(points[x][y].getColor(startingPointSF, showStaticField));
                 g.fillRect((x * size) + 1, (y * size) + 1, (size - 1), (size - 1));
+                if (points[x][y].hasPedestrian != 0) {
+                    g.setColor(new Color(250,250,0));
+                    if(points[x][y].hasPedestrian <= 6) {
+                        int n = points[x][y].hasPedestrian;
+                        g.fillRect((x * size) + 1 + 2 + 6 - n, (y * size) + 1 + 2 + 6 - n,
+                                (size - 1 - 4 - 12 + n * 2), (size - 1 - 4 - 12 + n * 2));
+                    }
+                    else
+                        g.fillRect((x * size) + 3, (y * size) + 3, (size - 5), (size - 5));
+                }
             }
         }
-        for(Car c : simulation.cars){
+        for(Car c : simulation.cars){ //TODO color of cars
             int _x = c.currentPosition.x;
             int _y = c.currentPosition.y;
             if(c.destination.x==1){
@@ -304,7 +300,7 @@ public class Board extends JComponent implements MouseInputListener {
             else if(c.destination.y==33){
                 g.setColor(new Color(142, 17, 204));
             }
-            g.fillRect((_x * size) + 1, (_y * size) + 1, (size - 1), (size - 1));
+            g.fillRect((_x * size) + 3, (_y * size) + 3, (size - 5), (size - 5));
         }
     }
 

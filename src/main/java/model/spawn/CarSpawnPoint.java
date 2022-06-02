@@ -12,7 +12,7 @@ public class CarSpawnPoint extends SpawnPoint {
     private final ArrayList<Integer> possibleDestinationProbability = new ArrayList<>();
     public CarSpawnPoint(JSONObject info, Board newMap){
         super(new Coords(0, 0), 0, null);
-        maxVelocity = 2; //TODO changeable
+        maxVelocity = 4; //TODO changeable
         JSONArray startCoords = info.getJSONArray("coords");
         coords = new Coords(startCoords.getInt(0), startCoords.getInt(1));
         spawn_probability = info.getInt("spawn_probability");
