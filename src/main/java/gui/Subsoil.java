@@ -24,7 +24,8 @@ public enum Subsoil {
     lights_cars_red(14),
     lights_cars_green(15),
     lights_pedestrians_green (20),
-    underground_streetN (21),
+    lights_pedestrians_green_blinking(21),
+    underground_streetN (23),
     underground_streetS (22);
 
 
@@ -58,7 +59,8 @@ public enum Subsoil {
             case 14 -> lights_cars_red;
             case 15 -> lights_cars_green;
             case 20 -> lights_pedestrians_green;
-            case 21 -> underground_streetN;
+            case 21 -> lights_pedestrians_green_blinking;
+            case 23 -> underground_streetN;
             case 22 -> underground_streetS;
             default -> unavailable;
         };
@@ -89,6 +91,7 @@ public enum Subsoil {
             case lights_cars_red -> new Color(0.8f, 0.0f, 0.0f, 0.7f);
             case lights_cars_green -> new Color(55, 253, 18);
             case lights_pedestrians_green -> new Color(0.3f, 0.9f, 0.0f, 0.7f);
+            case lights_pedestrians_green_blinking -> new Color(0.5f, 0.5f, 0.0f, 1f);
             case lights_pedestrians_red -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
         };
     }
