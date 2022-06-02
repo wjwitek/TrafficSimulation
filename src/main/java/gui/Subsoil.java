@@ -23,7 +23,9 @@ public enum Subsoil {
     crossingW    (19),
     lights_cars_red(14),
     lights_cars_green(15),
-    lights_pedestrians_green (20);
+    lights_pedestrians_green (20),
+    underground_streetN (21),
+    underground_streetS (22);
 
 
     private final int intValue;
@@ -56,6 +58,8 @@ public enum Subsoil {
             case 14 -> lights_cars_red;
             case 15 -> lights_cars_green;
             case 20 -> lights_pedestrians_green;
+            case 21 -> underground_streetN;
+            case 22 -> underground_streetS;
             default -> unavailable;
         };
     }
@@ -63,24 +67,26 @@ public enum Subsoil {
         return switch (s) {
             case empty -> new Color(1.0f, 1.0f, 1.0f, 1.0f);
             case pavement -> new Color(0.2f, 0.6f, 0.2f, 0.7f);
-            case street -> new Color(0.3f, 0.3f, 0.3f, 0.7f);
-            case crossing -> new Color(0.6f, 0.6f, 0.6f, 0.7f);
             case unavailable -> new Color(0.0f, 0.0f, 0.0f, 1.0f);
             case underground -> new Color(0.7f, 0.0f, 0.7f, 0.7f);
             case underground_street -> new Color(0.3f, 0.3f, 0.3f, 0.4f);
+            case underground_streetN -> new Color(0.4f, 0.3f, 0.3f, 0.4f);
+            case underground_streetS -> new Color(0.3f, 0.3f, 0.4f, 0.4f);
             case underground_unavailable -> new Color(0.0f, 0.0f, 0.0f, 0.4f);
             case underground_pavement -> new Color(0.2f, 0.8f, 0.2f, 0.4f);
+//            case street, streetN, streetE, streetS, streetW -> new Color(0.3f, 0.3f, 0.3f, 0.7f);
+            case street -> new Color(0.3f, 0.3f, 0.3f, 0.7f);
             case streetN -> new Color(0.4f, 0.3f, 0.3f, 0.7f);
             case streetE -> new Color(0.3f, 0.4f, 0.3f, 0.7f);
             case streetS -> new Color(0.3f, 0.3f, 0.4f, 0.7f);
             case streetW -> new Color(0.3f, 0.3f, 0.3f, 0.9f);
+//            case crossing, crossingN, crossingE, crossingS, crossingW -> new Color(0.6f, 0.6f, 0.6f, 0.7f);
+            case crossing -> new Color(0.6f, 0.6f, 0.6f, 0.7f);
             case crossingN -> new Color(0.7f, 0.6f, 0.6f, 0.7f);
             case crossingE -> new Color(0.6f, 0.7f, 0.6f, 0.7f);
             case crossingS -> new Color(0.6f, 0.6f, 0.7f, 0.7f);
             case crossingW -> new Color(0.6f, 0.6f, 0.6f, 0.9f);
-//             case lights_cars -> new Color(0.8f, 0.0f, 0.0f, 0.7f);
             case lights_cars_red -> new Color(0.8f, 0.0f, 0.0f, 0.7f);
-//            case lights -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
             case lights_cars_green -> new Color(55, 253, 18);
             case lights_pedestrians_green -> new Color(0.3f, 0.9f, 0.0f, 0.7f);
             case lights_pedestrians_red -> new Color(0.8f, 0.3f, 0.0f, 0.7f);
@@ -90,6 +96,8 @@ public enum Subsoil {
     public static boolean driveable(Subsoil s){
         return switch (s){
             case street, crossing, underground_street, lights_cars_green -> true;
+            case underground_streetN -> true;
+            case underground_streetS -> true;
             case streetN -> true;
             case streetE -> true;
             case streetS -> true;

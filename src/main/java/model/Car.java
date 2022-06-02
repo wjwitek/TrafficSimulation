@@ -13,14 +13,15 @@ public class Car {
     public Coords currentPosition;
     //private ArrayList<Point> pathTaken = new ArrayList<>();
     protected Board map;
-    private final int maxVelocity = 4;
+    private final int maxVelocity;
     private int velocity;
     private int acceleration = 1; // TODO change to function of velocity
     public Coords destination;
 
-    public Car(Board newMap, int startingVelocity, Coords startingPosition){
+    public Car(Board newMap, int startingVelocity, Coords startingPosition, int maxVelocity){
         map = newMap;
         map.points[startingPosition.x][startingPosition.y].hasCar = true;
+        this.maxVelocity = maxVelocity;
         if (startingVelocity > maxVelocity){
             throw new ArithmeticException("Starting velocity cannot be bigger than maximum velocity.");
         }
