@@ -180,7 +180,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                 case "Switch mode" -> {
                     mode = !mode;
                     board.mode = mode;
-                    System.out.println(mode);
+                    //System.out.println(mode);
                     if (mode){
                         timer.stop();
                         buttons.get(ButtonNames.SwitchMode).setText("Normal mode");
