@@ -62,7 +62,7 @@ public class Car {
         Point currentPoint = map.getPointByCoords(currentPosition);
         for (int i=0; i<maxVelocity; i++){
             Point nextPoint = currentPoint.getLowestStaticFieldNeighbour(destination);
-            if (nextPoint.hasCar || nextPoint.type == Subsoil.lights_cars_red){
+            if (nextPoint.hasCar || nextPoint.type == Subsoil.lights_cars_red || nextPoint.hasPedestrian > 0){
                 break;
             }
             path.add(nextPoint);
