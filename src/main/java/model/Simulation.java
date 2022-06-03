@@ -81,6 +81,19 @@ public class Simulation {
         for (TrafficLight light : trafficLightsPedestrian) {
             light.changeLight(iteration_num % lightCycleLength);
         }
+
+        // move and delete pedestrians
+        ArrayList<Pedestrian> pedestriansToDelete = new ArrayList<>();
+        for (Pedestrian pedestrian : pedestrians) {
+            if (pedestrian.move()) {
+                pedestriansToDelete.add(pedestrian);
+            }
+        }
+        for (Pedestrian pedestrian : pedestriansToDelete) {
+            map.points[pedestrian.currentPosition.x][pedestrian.currentPosition.y].hasPedestrian--;
+            pedestrians.remove(pedestrian);
+        }
+
         // move and delete cars
         ArrayList<Car> carsToDelete = new ArrayList<>();
         for (Car car: cars){
@@ -91,17 +104,6 @@ public class Simulation {
         for (Car car: carsToDelete){
             map.points[car.currentPosition.x][car.currentPosition.y].hasCar = false;
             cars.remove(car);
-        }
-
-        ArrayList<Pedestrian> pedestriansToDelete = new ArrayList<>();
-        for (Pedestrian pedestrian : pedestrians) {
-            if (pedestrian.move()) {
-                pedestriansToDelete.add(pedestrian);
-            }
-        }
-        for (Pedestrian pedestrian : pedestriansToDelete) {
-            map.points[pedestrian.currentPosition.x][pedestrian.currentPosition.y].hasPedestrian--;
-            pedestrians.remove(pedestrian);
         }
     }
 
