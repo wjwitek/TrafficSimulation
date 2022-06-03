@@ -56,7 +56,7 @@ public class Car {
     protected boolean finalizeIteration(){
         move(nextPath);
 
-        if (outOfBounds()){
+        if (outOfBounds() || littleCheat()){
             // signals to the simulation that car should be deleted
             return true;
         }
@@ -81,7 +81,7 @@ public class Car {
         Point currentPoint = map.getPointByCoords(currentPosition);
         for (int i=0; i<maxVelocity; i++){
             Point nextPoint = currentPoint.getLowestStaticFieldNeighbour(destination);
-            if (nextPoint.hasCar || nextPoint.type == Subsoil.lights_cars_red || (nextPoint.hasPedestrian > 0 && Subsoil.underground(nextPoint.type))){
+            if (nextPoint.hasCar || nextPoint.type == Subsoil.lights_cars_red || resolveCrossing(map.getPointByCoords(currentPosition), nextPoint)){
                 break;
             }
             path.add(nextPoint);
@@ -109,5 +109,16 @@ public class Car {
             map.points[currentPosition.x][currentPosition.y].hasCar = false;
             currentPosition = new Coords(newPoint.x, newPoint.y);
         }
+    }
+
+    private boolean littleCheat(){
+        return velocity == 0 && Math.abs(currentPosition.x - destination.x) < 2 && Math.abs(currentPosition.y - destination.y) < 2;
+    }
+
+    private boolean resolveCrossing(Point currentPosition, Point nextPoint){
+        if (!(Subsoil.crossing(currentPosition.type))){
+            return nextPoint.pedestrianOnCrossing();
+        }
+        return nextPoint.hasPedestrian > 0;
     }
 }

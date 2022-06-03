@@ -102,6 +102,15 @@ public class Board extends JComponent implements MouseInputListener {
             }
             line = bufferedreader.readLine();
         }
+
+        // add crossing neighbours
+        for (Point[] pointList: points){
+            for (Point point: pointList){
+                if (Subsoil.crossing(point.type)){
+                    point.getCrossingNeighbours();
+                }
+            }
+        }
     }
 
     protected void paintComponent(Graphics g) {
@@ -136,7 +145,20 @@ public class Board extends JComponent implements MouseInputListener {
                 boolean updated = field[current.x][current.y] == 0;
 
                 for (Point tmp : current.neighbors) {
-                    if (Subsoil.walkable(current.type)) {
+                    if (current.type == Subsoil.pavement ||
+                            current.type == Subsoil.crossing ||
+                            current.type == Subsoil.crossingE ||
+                            current.type == Subsoil.crossingN ||
+                            current.type == Subsoil.crossingS ||
+                            current.type == Subsoil.crossingW ||
+                            current.type == Subsoil.underground ||
+                            current.type == Subsoil.underground_pavement ||
+                            current.type == Subsoil.underground_street ||
+                            current.type == Subsoil.underground_streetS ||
+                            current.type == Subsoil.underground_streetN ||
+                            current.type == Subsoil.underground_unavailable ||
+                            current.type == Subsoil.lights_pedestrians_red ||
+                            current.type == Subsoil.lights_pedestrians_green) {
                         if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
                             field[current.x][current.y] = field[tmp.x][tmp.y] + 1;
                             updated = true;
@@ -145,7 +167,20 @@ public class Board extends JComponent implements MouseInputListener {
                 }
                 if (updated) {
                     for (Point tmp : current.neighbors) {
-                        if (Subsoil.walkable(tmp.type)) {
+                        if (tmp.type == Subsoil.pavement ||
+                                tmp.type == Subsoil.crossing ||
+                                tmp.type == Subsoil.crossingE ||
+                                tmp.type == Subsoil.crossingN ||
+                                tmp.type == Subsoil.crossingS ||
+                                tmp.type == Subsoil.crossingW ||
+                                tmp.type == Subsoil.underground ||
+                                tmp.type == Subsoil.underground_pavement ||
+                                tmp.type == Subsoil.underground_street ||
+                                tmp.type == Subsoil.underground_streetS ||
+                                tmp.type == Subsoil.underground_streetN ||
+                                tmp.type == Subsoil.underground_unavailable ||
+                                tmp.type == Subsoil.lights_pedestrians_red ||
+                                tmp.type == Subsoil.lights_pedestrians_green) {
                             toCheck.add(tmp);
                         }
                     }
@@ -162,7 +197,21 @@ public class Board extends JComponent implements MouseInputListener {
                 Point current = toCheck.remove(0);
                 boolean updated = field[current.x][current.y] == 0;
                 for (Point tmp : current.neighbors) {
-                    if (Subsoil.driveable(current.type)) {
+                    if (current.type == Subsoil.street ||
+//                            current.type == Subsoil.crossing ||
+                            current.type == Subsoil.crossingE && tmp.x > current.x ||
+                            current.type == Subsoil.crossingN && tmp.y < current.y ||
+                            current.type == Subsoil.crossingS && tmp.y > current.y ||
+                            current.type == Subsoil.crossingW && tmp.x < current.x ||
+                            current.type == Subsoil.streetE && tmp.x > current.x ||
+                            current.type == Subsoil.streetN && tmp.y < current.y ||
+                            current.type == Subsoil.streetS && tmp.y > current.y ||
+                            current.type == Subsoil.streetW && tmp.x < current.x ||
+//                            current.type == Subsoil.underground_street ||
+                            current.type == Subsoil.underground_streetS && tmp.y > current.y ||
+                            current.type == Subsoil.underground_streetN && tmp.y < current.y ||
+                            current.type == Subsoil.lights_cars_green ||
+                            current.type == Subsoil.lights_cars_red) {
                         if (field[tmp.x][tmp.y] + 1 < field[current.x][current.y]) {
                             field[current.x][current.y] = field[tmp.x][tmp.y] + 1;
                             updated = true;
@@ -171,7 +220,25 @@ public class Board extends JComponent implements MouseInputListener {
                 }
                 if (updated) {
                     for (Point tmp : current.neighbors) {
-                        if (Subsoil.driveable(tmp.type)) {
+                        if (tmp.type == Subsoil.street ||
+                                tmp.type == Subsoil.crossing ||
+                                tmp.type == Subsoil.crossingE ||
+                                tmp.type == Subsoil.crossingN ||
+                                tmp.type == Subsoil.crossingS ||
+                                tmp.type == Subsoil.crossingW ||
+                                tmp.type == Subsoil.streetE ||
+                                tmp.type == Subsoil.streetN ||
+                                tmp.type == Subsoil.streetS ||
+                                tmp.type == Subsoil.streetW ||
+//                                tmp.type == Subsoil.streetE && tmp.x < current.x ||
+//                                tmp.type == Subsoil.streetN && tmp.y < current.y ||
+//                                tmp.type == Subsoil.streetS && tmp.y > current.y ||
+//                                tmp.type == Subsoil.streetW && tmp.x > current.x ||
+                                tmp.type == Subsoil.underground_street ||
+                                tmp.type == Subsoil.underground_streetS ||
+                                tmp.type == Subsoil.underground_streetN ||
+                                tmp.type == Subsoil.lights_cars_green ||
+                                tmp.type == Subsoil.lights_cars_red) {
                             toCheck.add(tmp);
                         }
                     }
@@ -252,8 +319,6 @@ public class Board extends JComponent implements MouseInputListener {
         int x = e.getX() / size;
         int y = e.getY() / size;
         if (mode) {
-//            int x = e.getX() / size;
-//            int y = e.getY() / size;
             if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
                 if (rectangleMode == 2) {
                     rectangleCorner = new Coords(x, y);

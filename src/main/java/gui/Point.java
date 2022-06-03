@@ -1,11 +1,9 @@
 package main.java.gui;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
-public class Point {
+public class Point implements Comparable<Point> {
     public Subsoil type;
     public ArrayList<Point> neighbors = new ArrayList<>();
     public int x, y;
@@ -14,12 +12,60 @@ public class Point {
     Board board;
     public boolean hasCar;
     public int hasPedestrian = 0;
+    private final TreeSet<Point> crossingNeighbours = new TreeSet<>();
 
     public Point(int x, int y, Board board){
         this.x = x;
         this.y = y;
         type = Subsoil.empty;
         this.board = board;
+    }
+
+    protected void getCrossingNeighbours(){
+        // find left upper corner
+        Point leftUpper = this;
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            if (Subsoil.crossing(board.points[leftUpper.x - 1][leftUpper.y].type)){
+                leftUpper = board.points[leftUpper.x - 1][leftUpper.y];
+                changed = true;
+            }
+            if (Subsoil.crossing(board.points[leftUpper.x][leftUpper.y - 1].type)){
+                leftUpper = board.points[leftUpper.x][leftUpper.y - 1];
+                changed = true;
+            }
+        }
+        changed = true;
+        // find right down corner
+        Point rightDown = this;
+        while (changed) {
+            changed = false;
+            if (Subsoil.crossing(board.points[rightDown.x + 1][rightDown.y].type)) {
+                rightDown = board.points[rightDown.x + 1][rightDown.y];
+                changed = true;
+            }
+            if (Subsoil.crossing(board.points[rightDown.x][rightDown.y + 1].type)) {
+                rightDown = board.points[rightDown.x][rightDown.y + 1];
+                changed = true;
+            }
+        }
+        // add crossing Points
+        for (int x=leftUpper.x; x<rightDown.x+1; x++){
+            crossingNeighbours.addAll(Arrays.asList(board.points[x]).subList(leftUpper.y, rightDown.y + 1));
+        }
+    }
+
+    public boolean pedestrianOnCrossing(){
+        if (!(Subsoil.crossing(type))){
+            return false;
+        }
+        for (Point crossingNeighbour : crossingNeighbours) {
+            if (crossingNeighbour.hasPedestrian > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addNeighbor(Point nei) {neighbors.add(nei);}
@@ -50,7 +96,6 @@ public class Point {
     public Point getLowestStaticFieldNeighbour(Coords destination){
         ArrayList<Point> bests = new ArrayList<>();
         bests.add(neighbors.get(0));
-//        Point best = neighbors.get(0);
         for (int i=1; i<neighbors.size(); i++){
             if (!(Subsoil.driveable(bests.get(0).type)) && Subsoil.driveable(neighbors.get(i).type)){
                 bests.clear();
@@ -80,5 +125,16 @@ public class Point {
 
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    @Override
+    public int compareTo(Point o) {
+        if (o.x == x && o.y == y){
+            return 0;
+        }
+        else if (o.x > x){
+            return 1;
+        }
+        return -1;
     }
 }

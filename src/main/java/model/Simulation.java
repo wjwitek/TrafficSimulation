@@ -2,6 +2,7 @@ package main.java.model;
 
 import main.java.gui.Board;
 import main.java.gui.Coords;
+import main.java.gui.Point;
 import main.java.model.spawn.CarSpawnPoint;
 import main.java.model.spawn.PedestrianSpawnPoint;
 import org.json.JSONArray;
@@ -20,11 +21,12 @@ public class Simulation {
     public ArrayList<Pedestrian> pedestrians = new ArrayList<>();
     public ArrayList<CarSpawnPoint> spawnPointsCars = new ArrayList<>();
     public ArrayList<PedestrianSpawnPoint> spawnPointsPedestrians = new ArrayList<>();
-    public ArrayList<TrafficLight> trafficLights = new ArrayList<>();
+    public ArrayList<TrafficLight> trafficLightsCars = new ArrayList<>();
     public ArrayList<TrafficLight> trafficLightsPedestrian = new ArrayList<>();
 
     private ArrayList<Coords> pointPedestrian = new ArrayList<>();
     private Board map;
+    private ArrayList<ArrayList<Point>> crossings = new ArrayList<>(); // list of crossings
 
     public Simulation(Board newMap) {
         map = newMap;
@@ -60,7 +62,7 @@ public class Simulation {
         JSONArray trafficLightsConfig = spawns.getJSONArray("traffic_lights");
         for (int i = 0; i < trafficLightsConfig.length(); i++) {
             JSONObject info = (JSONObject) trafficLightsConfig.get(i);
-            trafficLights.add(new TrafficLight(info, map));
+            trafficLightsCars.add(new TrafficLight(info, map));
         }
 
         JSONArray trafficLightsPedestriansConfig = spawns.getJSONArray("traffic_lights_pedestrians");
@@ -75,7 +77,7 @@ public class Simulation {
         newPedestrian();
         map.repaint();
         // change color lights
-        for (TrafficLight light : trafficLights) {
+        for (TrafficLight light : trafficLightsCars) {
             light.changeLight(iteration_num % lightCycleLength);
         }
         for (TrafficLight light : trafficLightsPedestrian) {
@@ -127,5 +129,9 @@ public class Simulation {
                 pedestrians.add(pedestrian);
             }
         }
+    }
+
+    private void initListOfCrossings(){
+
     }
 }
