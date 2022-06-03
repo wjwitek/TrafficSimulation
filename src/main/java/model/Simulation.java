@@ -115,6 +115,7 @@ public class Simulation {
             Car newCar = spawn.get();
             if (newCar != null) {
                 cars.add(newCar);
+                map.repaint();
             }
         }
     }
