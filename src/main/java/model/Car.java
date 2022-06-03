@@ -17,6 +17,7 @@ public class Car {
     private int velocity;
     private int acceleration = 1; // TODO change to function of velocity
     public Coords destination;
+    private ArrayList<Point> nextPath;
 
     public Car(Board newMap, int startingVelocity, Coords startingPosition, int maxVelocity){
         map = newMap;
@@ -45,6 +46,24 @@ public class Car {
         return false;
     }
 
+    protected void prepareIteration(){
+        // get path of movement
+        nextPath = preparePath();
+        // calculate new velocity
+        newVelocity(nextPath);
+    }
+
+    protected boolean finalizeIteration(){
+        move(nextPath);
+
+        if (outOfBounds()){
+            // signals to the simulation that car should be deleted
+            return true;
+        }
+        map.points[currentPosition.x][currentPosition.y].hasCar = true;
+        return false;
+    }
+
     private boolean outOfBounds(){
         if (currentPosition.x < 0 || currentPosition.x >= map.points.length ||
                 (currentPosition.x == destination.x && currentPosition.y == destination.y)){
@@ -62,7 +81,7 @@ public class Car {
         Point currentPoint = map.getPointByCoords(currentPosition);
         for (int i=0; i<maxVelocity; i++){
             Point nextPoint = currentPoint.getLowestStaticFieldNeighbour(destination);
-            if (nextPoint.hasCar || nextPoint.type == Subsoil.lights_cars_red || nextPoint.hasPedestrian > 0){
+            if (nextPoint.hasCar || nextPoint.type == Subsoil.lights_cars_red || (nextPoint.hasPedestrian > 0 && Subsoil.underground(nextPoint.type))){
                 break;
             }
             path.add(nextPoint);

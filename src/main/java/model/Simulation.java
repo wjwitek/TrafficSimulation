@@ -97,7 +97,10 @@ public class Simulation {
         // move and delete cars
         ArrayList<Car> carsToDelete = new ArrayList<>();
         for (Car car: cars){
-            if (car.iteration()){
+            car.prepareIteration();
+        }
+        for (Car car: cars){
+            if (car.finalizeIteration()){
                 carsToDelete.add(car);
             }
         }

@@ -144,6 +144,15 @@ public enum Subsoil {
                 );
     }
 
+    public static boolean underground(Subsoil s){
+        return s == underground_streetS ||
+                s == underground ||
+                s == underground_pavement ||
+                s == underground_street ||
+                s == underground_streetN ||
+                s == underground_unavailable;
+    }
+
     public static boolean walkable(Subsoil s){
         return (
                 s==pavement ||
