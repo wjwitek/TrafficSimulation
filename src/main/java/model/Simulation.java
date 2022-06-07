@@ -2,6 +2,7 @@ package main.java.model;
 
 import main.java.gui.Board;
 import main.java.gui.Coords;
+import main.java.gui.Point;
 import main.java.model.spawn.CarSpawnPoint;
 import main.java.model.spawn.PedestrianSpawnPoint;
 import org.json.JSONArray;
@@ -14,18 +15,22 @@ import java.util.ArrayList;
 import static main.java.model.spawn.SpawnPoint.getRandomNumber;
 
 public class Simulation {
-    private final String spawnSource = "/simulation_config.json";
-    private final int lightCycleLength = 120; // TODO move to simulation_config.json
+    private final static String spawnSource = "/simulation_config.json";
+    private final static int lightCycleLength = 120; // TODO move to simulation_config.json
     public ArrayList<Car> cars = new ArrayList<>();
     public ArrayList<Pedestrian> pedestrians = new ArrayList<>();
     public ArrayList<CarSpawnPoint> spawnPointsCars = new ArrayList<>();
     public ArrayList<PedestrianSpawnPoint> spawnPointsPedestrians = new ArrayList<>();
-    public ArrayList<TrafficLight> trafficLights = new ArrayList<>();
+    public ArrayList<TrafficLight> trafficLightsCars = new ArrayList<>();
     public ArrayList<TrafficLight> trafficLightsPedestrian = new ArrayList<>();
 
-    private ArrayList<Coords> pointPedestrian = new ArrayList<>();
-    private Board map;
+    private final ArrayList<Coords> pointPedestrian = new ArrayList<>();
+    private final Board map;
 
+    /**
+     * Class constructor that reads information from config file.
+     * @param newMap board where simulation is placed
+     */
     public Simulation(Board newMap) {
         map = newMap;
         // read spawn points from config
@@ -57,10 +62,11 @@ public class Simulation {
                     probability, map, pointPedestrian));
         }
 
+        // read traffic lights from config
         JSONArray trafficLightsConfig = spawns.getJSONArray("traffic_lights");
         for (int i = 0; i < trafficLightsConfig.length(); i++) {
             JSONObject info = (JSONObject) trafficLightsConfig.get(i);
-            trafficLights.add(new TrafficLight(info, map));
+            trafficLightsCars.add(new TrafficLight(info, map));
         }
 
         JSONArray trafficLightsPedestriansConfig = spawns.getJSONArray("traffic_lights_pedestrians");
@@ -70,12 +76,16 @@ public class Simulation {
         }
     }
 
+    /**
+     * Perform one iteration of simulation.
+     * @param iteration_num number of iteration
+     */
     public void iteration(int iteration_num) {
         newCars();
         newPedestrian();
         map.repaint();
         // change color lights
-        for (TrafficLight light : trafficLights) {
+        for (TrafficLight light : trafficLightsCars) {
             light.changeLight(iteration_num % lightCycleLength);
         }
         for (TrafficLight light : trafficLightsPedestrian) {
@@ -110,15 +120,22 @@ public class Simulation {
         }
     }
 
+    /**
+     * Add new car on each spawn point.
+     */
     public void newCars() {
         for (CarSpawnPoint spawn : spawnPointsCars) {
             Car newCar = spawn.get();
             if (newCar != null) {
                 cars.add(newCar);
+                map.repaint();
             }
         }
     }
 
+    /**
+     * Add new pedestrian on each spawn point.
+     */
     public void newPedestrian() {
         for (PedestrianSpawnPoint spawn : spawnPointsPedestrians) {
             Pedestrian pedestrian = spawn.get();

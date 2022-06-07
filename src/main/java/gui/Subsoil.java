@@ -129,7 +129,6 @@ public enum Subsoil {
                 s==streetN ||
                 s==streetW ||
 
-                s==crossing ||
                 s==crossingS ||
                 s==crossingE ||
                 s==crossingN ||
@@ -151,6 +150,17 @@ public enum Subsoil {
                 s == underground_street ||
                 s == underground_streetN ||
                 s == underground_unavailable;
+    }
+
+    public static boolean crossing(Subsoil s){
+        return s == crossingS ||
+                s == crossing ||
+                s == crossingE ||
+                s == crossingN ||
+                s == crossingW ||
+                s == lights_pedestrians_green ||
+                s == lights_pedestrians_red ||
+                s == lights_pedestrians_green_blinking;
     }
 
     public static boolean walkable(Subsoil s){

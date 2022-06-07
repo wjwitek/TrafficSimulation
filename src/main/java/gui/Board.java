@@ -102,6 +102,15 @@ public class Board extends JComponent implements MouseInputListener {
             }
             line = bufferedreader.readLine();
         }
+
+        // add crossing neighbours
+        for (Point[] pointList: points){
+            for (Point point: pointList){
+                if (Subsoil.crossing(point.type)){
+                    point.getCrossingNeighbours();
+                }
+            }
+        }
     }
 
     protected void paintComponent(Graphics g) {
@@ -310,8 +319,6 @@ public class Board extends JComponent implements MouseInputListener {
         int x = e.getX() / size;
         int y = e.getY() / size;
         if (mode) {
-//            int x = e.getX() / size;
-//            int y = e.getY() / size;
             if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
                 if (rectangleMode == 2) {
                     rectangleCorner = new Coords(x, y);
