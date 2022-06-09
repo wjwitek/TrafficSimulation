@@ -1,5 +1,7 @@
 package main.java.gui;
 
+import main.java.Program;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -19,13 +21,14 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     private static final long serialVersionUID = 1L;
     private Board board;
     int squareSize, squaresVertically, squaresHorizontally;
-    private final int maxDelay = 500; //TODO set higher limit after creating simulation, for now, with nothing to do, higher values crash app
+    private final int maxDelay = 200; //TODO set higher limit after creating simulation, for now, with nothing to do, higher values crash app
+    private final int minDelay = 15;
     private final Timer timer;
     private int iterNum = 0;
     private final JFrame frame;
     private Container container;
     private boolean mode = false;
-    private JPanel buttonPanel, buttonPanel1, buttonPanel2;
+    private JPanel buttonPanel;
     private JSlider simulationSpeed;
     private JFileChooser mapSource;
 //    private TextField xCords;
@@ -38,7 +41,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     public GUI(JFrame jf, int squareSize) {
         jf.setResizable(false);
         frame = jf;
-        timer = new Timer(100, this);
+        if(Program.debug)
+            timer = new Timer(minDelay, this);
+        else
+            timer = new Timer((maxDelay-minDelay)/2, this);
+
         timer.stop();
         this.squareSize = squareSize;
     }
@@ -52,8 +59,6 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         this.container.setSize(new Dimension(frame.getWidth(), frame.getWidth()));
 
         buttonPanel = new JPanel(new GridLayout(2,4));
-        buttonPanel1 = new JPanel();
-        buttonPanel2 = new JPanel();
 
         // initialize normal mode buttons
         JButton startStopSimulation = initButton("Start", "Start", ButtonNames.StartStopSimulation);
@@ -79,7 +84,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 //        yCords.setPreferredSize(new Dimension(30,20));
 
         simulationSpeed = new JSlider();
-        simulationSpeed.setMinimum(0);
+        simulationSpeed.setMinimum(minDelay);
         simulationSpeed.setMaximum(maxDelay);
         simulationSpeed.addChangeListener(this);
         simulationSpeed.setValue(maxDelay - timer.getDelay());

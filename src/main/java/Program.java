@@ -8,7 +8,7 @@ import java.io.Serial;
 public class Program extends JFrame {
     @Serial
     private static final long serialVersionUID = 1L;
-    public static boolean debug = true;
+    public static boolean debug = false;
 
     public static void main(String[] args) {
         new Program();
