@@ -134,7 +134,6 @@ public enum Subsoil {
                 s==crossingN ||
                 s==crossingW ||
 
-                s==underground_street ||
                 s==underground_streetS ||
                 s==underground_streetN ||
 
