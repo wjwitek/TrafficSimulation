@@ -2,7 +2,7 @@
   "spawn_points_cars": [
     {
       "coords": [9, 1],
-      "spawn_probability": 6,
+      "spawn_probability": 3,
       "destination": [1, 20, 1, 21],
       "destination_probability" : [50, 50]
     },
@@ -20,7 +20,7 @@
     },
     {
       "coords": [12, 1],
-      "spawn_probability": 3,
+      "spawn_probability": 6,
       "destination": [46, 23, 46, 24],
       "destination_probability" : [50, 50]
     },
