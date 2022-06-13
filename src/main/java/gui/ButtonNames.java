@@ -8,5 +8,8 @@ public enum ButtonNames {
     Save,
     Rectangle,
     Clear,
-    StaticField
+    StaticField,
+    Show,
+    Hide,
+    Exit
 }
