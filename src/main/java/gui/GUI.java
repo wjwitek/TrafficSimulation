@@ -21,7 +21,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     private static final long serialVersionUID = 1L;
     private Board board;
     int squareSize, squaresVertically, squaresHorizontally;
-    private final int maxDelay = 200; //TODO set higher limit after creating simulation, for now, with nothing to do, higher values crash app
+    private final int maxDelay = 500;
     private final int minDelay = 15;
     private final Timer timer;
     private int iterNum = 0;
@@ -31,8 +31,6 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
     private JPanel buttonPanel;
     private JSlider simulationSpeed;
     private JFileChooser mapSource;
-//    private TextField xCords;
-//    private TextField yCords;
 
     private JComboBox<Subsoil> drawType;
     Map<ButtonNames, JButton> buttons = new HashMap<>();
@@ -44,7 +42,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         if(Program.debug)
             timer = new Timer(minDelay, this);
         else
-            timer = new Timer((maxDelay-minDelay)/2, this);
+            timer = new Timer((maxDelay-minDelay)/5, this);
 
         timer.stop();
         this.squareSize = squareSize;
@@ -81,12 +79,6 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         drawType.addActionListener(this);
         drawType.setActionCommand("drawType");
 
-//        xCords = new TextField();
-//        xCords.setText("1");
-//        xCords.setPreferredSize(new Dimension(30,20));
-//        yCords = new TextField();
-//        yCords.setText("21");
-//        yCords.setPreferredSize(new Dimension(30,20));
 
         simulationSpeed = new JSlider();
         simulationSpeed.setMinimum(minDelay);
@@ -96,19 +88,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
         mapSource = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-//        buttonPanel.add(staticField);
-//        buttonPanel.add(xCords);
-//        buttonPanel.add(yCords);
-//        buttonPanel.add(switchMode);
-
-//        buttonPanel.add(newSource);
         buttonPanel.add(startStopSimulation);
         buttonPanel.add(showMoreOptions);
         buttonPanel.add(simulationSpeed);
         buttonPanel.add(exit);
-//        buttonPanel.add(restart);
 
-//        buttonPanels.add(buttonPanel1, buttonPanel2);
 
         board = new Board(squaresHorizontally+2, squaresVertically+2, squareSize, "src/main/resources/table.txt");
         this.container.add(board, BorderLayout.CENTER);
@@ -119,20 +103,15 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         // remove old buttons
         buttonPanel.remove(buttons.get(ButtonNames.NewSource));
         buttonPanel.remove(buttons.get(ButtonNames.StartStopSimulation));
-//        buttonPanel.remove(buttons.get(ButtonNames.StaticField));
-//        buttonPanel.remove(xCords);
-//        buttonPanel.remove(yCords);
         buttonPanel.remove(simulationSpeed);
         buttonPanel.remove(buttons.get(ButtonNames.Restart));
         buttonPanel.remove(buttons.get(ButtonNames.Hide));
-//        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
 
         // add new buttons
         buttonPanel.add(buttons.get(ButtonNames.Save));
         buttonPanel.add(buttons.get(ButtonNames.Rectangle));
         buttonPanel.add(drawType);
         buttonPanel.add(buttons.get(ButtonNames.Clear));
-//        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
     }
 
     public void changeToNormalMode(){
@@ -150,12 +129,9 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         buttonPanel.add(buttons.get(ButtonNames.NewSource));
         buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
         buttonPanel.add(buttons.get(ButtonNames.StaticField));
-//        buttonPanel.add(xCords);
-//        buttonPanel.add(yCords);
         buttonPanel.add(simulationSpeed);
         buttonPanel.add(buttons.get(ButtonNames.Restart));
         buttonPanel.add(buttons.get(ButtonNames.Hide));
-//        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
     }
 
     public void extendedButtonPanel(){
@@ -177,9 +153,6 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         buttonPanel.remove(buttons.get(ButtonNames.StaticField));
         buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
         buttonPanel.remove(buttons.get(ButtonNames.NewSource));
-//        buttonPanel.add(buttons.get(ButtonNames.StaticField));
-//        buttonPanel.add(xCords);
-//        buttonPanel.add(yCords);
         buttonPanel.remove(simulationSpeed);
         buttonPanel.remove(buttons.get(ButtonNames.Restart));
         buttonPanel.remove(buttons.get(ButtonNames.Hide));
@@ -220,15 +193,10 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                         board.modeSF = true;
                         buttons.get(ButtonNames.StaticField).setText("Hide static field");
                     }
-//                    board.modeSF = !board.modeSF;
-//                    board.startingPointSF.change(Integer.parseInt(xCords.getText()), Integer.parseInt(yCords.getText()));
-//                    board.showStaticField = !board.showStaticField;
-//                    board.repaint();
                 }
                 case "Switch mode" -> {
                     mode = !mode;
                     board.mode = mode;
-                    //System.out.println(mode);
                     if (mode){
                         timer.stop();
                         buttons.get(ButtonNames.SwitchMode).setText("Normal mode");
@@ -275,6 +243,8 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                     buttonPanel.repaint();
                 }
                 case "Hide" -> {
+                    board.modeSF = false;
+                    board.showStaticField = false;
                     basicButtonPanel();
                     container.revalidate();
                     container.repaint();
@@ -307,13 +277,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         System.out.println("Restarting simulation");
 
         board.restart();
-        // TODO actually restart simulation
         iterNum = 0;
         frame.setTitle("Traffic simulation, iteration: " + iterNum);
     }
 
     private void saveMap(){
-        // TODO save map to custom filename, not always the same
         try {
             FileWriter table = new FileWriter("src/main/resources/table.txt");
             String[][] S = new String[board.points.length][board.points[0].length];

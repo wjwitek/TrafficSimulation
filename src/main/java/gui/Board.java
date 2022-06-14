@@ -292,7 +292,8 @@ public class Board extends JComponent implements MouseInputListener {
     public void mouseClicked(MouseEvent e) {
         int x = e.getX() / size;
         int y = e.getY() / size;
-        System.out.println(x +  " " + y);
+        if(Program.debug)
+            System.out.println(x +  " " + y);
         if (mode) {
             if ((x < points.length) && (x > 0) && (y < points[x].length) && (y > 0)) {
                 if (rectangleMode == 2) {

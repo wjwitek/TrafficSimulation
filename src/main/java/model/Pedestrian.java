@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Pedestrian {
     public boolean moved = false;
     public Coords currentPosition;
-//    private Coords vectorOfMovement; // [left-right, up-down]
     private Board map;
     private final int maxVelocity = 2;
     private int maxDistanceFromEnd;
@@ -29,7 +28,6 @@ public class Pedestrian {
             throw new ArithmeticException("Starting velocity cannot be bigger than maximum velocity.");
         }
         velocity = startingVelocity;
-//        vectorOfMovement = directionOfMovement;
         currentPosition = startingPosition;
         destinationPosition = endPosition;
     }

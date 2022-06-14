@@ -21,15 +21,15 @@
     {
       "coords": [12, 1],
       "spawn_probability": 6,
-      "destination": [46, 23, 46, 24],
-      "destination_probability" : [50, 50]
+      "destination": [46, 23, 46, 24, 31, 33],
+      "destination_probability" : [40, 40, 20]
     },
 
     {
       "coords": [1, 23],
       "spawn_probability": 8,
-      "destination": [46, 23],
-      "destination_probability" : [100]
+      "destination": [46, 24, 31, 33],
+      "destination_probability" : [70, 30]
     },
     {
       "coords": [1, 24],
@@ -42,7 +42,7 @@
       "coords": [14, 33],
       "spawn_probability": 33,
       "destination": [15, 1, 16, 1, 46, 23, 46, 24],
-      "destination_probability" : [46, 46, 4, 4]
+      "destination_probability" : [44, 44, 6, 6]
     },
     {
       "coords": [13, 33],
@@ -53,36 +53,48 @@
 
     {
       "coords": [32, 33],
-      "spawn_probability": 7,
-      "destination": [1, 20, 1, 21, 46, 23, 46, 24],
+      "spawn_probability": 3,
+      "destination": [15, 1, 16, 1, 1, 20, 1, 21],
       "destination_probability" : [20, 20, 30, 30]
     },
 
     {
       "coords": [33, 33],
-      "spawn_probability": 7,
-      "destination": [1, 20, 1, 21, 46, 23, 46, 24],
-      "destination_probability" : [20, 20, 30, 30]
+      "spawn_probability": 4,
+      "destination": [46, 23, 46, 24],
+      "destination_probability" : [50, 50]
     },
 
     {
-      "coords": [46, 21],
+      "coords": [46, 20],
       "spawn_probability": 4,
-      "destination": [35, 1, 11, 33, 12, 33, 15, 1, 16, 1],
-      "destination_probability" : [28, 10, 10, 26, 26]
+      "destination": [35, 1, 15, 1, 16, 1],
+      "destination_probability" : [40, 30, 30]
     },
     {
-      "coords": [46, 22],
-      "spawn_probability": 2,
-      "destination": [11, 33, 12, 33, 15, 1, 16, 1, 1, 20, 1, 21],
-      "destination_probability" : [12, 12, 27, 27, 12, 12]
+      "coords": [46, 21],
+      "spawn_probability": 4,
+      "destination": [1, 20, 1, 21],
+      "destination_probability" : [50, 50]
     },
 
     {
       "coords": [32, 1],
-      "spawn_probability": 7,
-      "destination": [1, 20, 1, 21, 11, 33, 12, 33, 15, 1, 16, 1],
-      "destination_probability" : [10, 10, 15, 15, 25, 25]
+      "spawn_probability": 4,
+      "destination": [35, 1, 15, 1, 16, 1, 1, 20, 1, 21, 21, 1, 22, 8],
+      "destination_probability" : [12, 17, 17, 17, 17, 10, 10]
+    },
+    {
+      "coords": [21, 2],
+      "spawn_probability": 2,
+      "destination": [35, 1, 15, 1, 16, 1, 1, 20, 1, 21, 22, 8],
+      "destination_probability" : [10, 22, 22, 22, 22, 10]
+    },
+    {
+      "coords": [22, 9],
+      "spawn_probability": 2,
+      "destination": [35, 1, 15, 1, 16, 1, 1, 20, 1, 21, 21, 1],
+      "destination_probability" : [10, 22, 22, 22, 22, 10]
     }
   ],
   "pedestrians_points": [

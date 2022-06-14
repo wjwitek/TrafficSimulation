@@ -22,10 +22,7 @@ public class CarSpawnPoint extends SpawnPoint {
         for (int i=0; i<destinationCoords.length(); i += 2){
             possibleDestination.add(new Coords(destinationCoords.getInt(i), destinationCoords.getInt(i + 1)));
             possibleDestinationProbability.add(destinationCoordsProbability.getInt(i/2));
-//            System.out.println(destinationCoords.getInt(i) + " " + destinationCoords.getInt(i + 1) + "; "
-//                    + destinationCoordsProbability.getInt(i/2));
         }
-//        map = newMap;
     }
 
     public Car get(){
