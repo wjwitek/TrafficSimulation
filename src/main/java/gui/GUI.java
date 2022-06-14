@@ -72,6 +72,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         JButton rectangle = initButton("Rectangle Mode On", "Rectangle", ButtonNames.Rectangle);
         JButton clear = initButton("Clear", "Clear", ButtonNames.Clear);
 
+        JButton showMoreOptions = initButton("Show more options", "Show", ButtonNames.Show);
+        JButton hideOptions =  initButton("Hide options", "Hide", ButtonNames.Hide);
+        JButton exit = initButton("Exit", "Exit", ButtonNames.Exit);
+
+
         drawType = new JComboBox<>(Subsoil.values());
         drawType.addActionListener(this);
         drawType.setActionCommand("drawType");
@@ -91,15 +96,17 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 
         mapSource = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-        buttonPanel.add(staticField);
+//        buttonPanel.add(staticField);
 //        buttonPanel.add(xCords);
 //        buttonPanel.add(yCords);
-        buttonPanel.add(switchMode);
+//        buttonPanel.add(switchMode);
 
-        buttonPanel.add(newSource);
+//        buttonPanel.add(newSource);
         buttonPanel.add(startStopSimulation);
+        buttonPanel.add(showMoreOptions);
         buttonPanel.add(simulationSpeed);
-        buttonPanel.add(restart);
+        buttonPanel.add(exit);
+//        buttonPanel.add(restart);
 
 //        buttonPanels.add(buttonPanel1, buttonPanel2);
 
@@ -117,6 +124,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 //        buttonPanel.remove(yCords);
         buttonPanel.remove(simulationSpeed);
         buttonPanel.remove(buttons.get(ButtonNames.Restart));
+        buttonPanel.remove(buttons.get(ButtonNames.Hide));
 //        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
 
         // add new buttons
@@ -133,19 +141,54 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         buttonPanel.remove(buttons.get(ButtonNames.Rectangle));
         buttonPanel.remove(drawType);
         buttonPanel.remove(buttons.get(ButtonNames.Clear));
-//        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
+        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
+        buttonPanel.remove(buttons.get(ButtonNames.StaticField));
+
 
         // add normal mode buttons
-        buttonPanel.add(buttons.get(ButtonNames.NewSource));
         buttonPanel.add(buttons.get(ButtonNames.StartStopSimulation));
-//        buttonPanel.add(buttons.get(ButtonNames.StaticField));
+        buttonPanel.add(buttons.get(ButtonNames.NewSource));
+        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
+        buttonPanel.add(buttons.get(ButtonNames.StaticField));
 //        buttonPanel.add(xCords);
 //        buttonPanel.add(yCords);
         buttonPanel.add(simulationSpeed);
         buttonPanel.add(buttons.get(ButtonNames.Restart));
+        buttonPanel.add(buttons.get(ButtonNames.Hide));
 //        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
     }
 
+    public void extendedButtonPanel(){
+        buttonPanel.remove(buttons.get(ButtonNames.Show));
+
+        buttonPanel.add(buttons.get(ButtonNames.StaticField));
+        buttonPanel.add(buttons.get(ButtonNames.SwitchMode));
+        buttonPanel.add(buttons.get(ButtonNames.NewSource));
+        buttonPanel.add(simulationSpeed);
+        buttonPanel.add(buttons.get(ButtonNames.Restart));
+        buttonPanel.add(buttons.get(ButtonNames.Hide));
+
+    }
+
+
+    public void basicButtonPanel(){
+        buttonPanel.remove(buttons.get(ButtonNames.Hide));
+
+        buttonPanel.remove(buttons.get(ButtonNames.StaticField));
+        buttonPanel.remove(buttons.get(ButtonNames.SwitchMode));
+        buttonPanel.remove(buttons.get(ButtonNames.NewSource));
+//        buttonPanel.add(buttons.get(ButtonNames.StaticField));
+//        buttonPanel.add(xCords);
+//        buttonPanel.add(yCords);
+        buttonPanel.remove(simulationSpeed);
+        buttonPanel.remove(buttons.get(ButtonNames.Restart));
+        buttonPanel.remove(buttons.get(ButtonNames.Hide));
+        buttonPanel.remove(buttons.get(ButtonNames.Exit));
+
+        buttonPanel.add(buttons.get(ButtonNames.Show));
+        buttonPanel.add(simulationSpeed);
+        buttonPanel.add(buttons.get(ButtonNames.Exit));
+    }
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(timer)){
             iterNum++;
@@ -224,6 +267,22 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
                         }
                     }
                     board.repaint();
+                }
+                case "Show" -> {
+                    extendedButtonPanel();
+                    container.revalidate();
+                    container.repaint();
+                    buttonPanel.repaint();
+                }
+                case "Hide" -> {
+                    basicButtonPanel();
+                    container.revalidate();
+                    container.repaint();
+                    buttonPanel.repaint();
+                }
+                case "Exit" -> {
+                    frame.setVisible(false);
+                    System.exit(0);
                 }
             }
         }
