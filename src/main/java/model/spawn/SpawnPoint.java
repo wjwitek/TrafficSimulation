@@ -5,7 +5,7 @@ import main.java.gui.Coords;
 
 import java.util.ArrayList;
 
-public class SpawnPoint {
+public abstract class SpawnPoint {
     protected Coords coords;
     protected int spawn_probability;
     protected Board map;
@@ -17,6 +17,11 @@ public class SpawnPoint {
         spawn_probability = prob;
         map = newMap;
         possibleDestination = destinationArray;
+        for(Coords dest : possibleDestination){
+            if(map.points[coords.x][coords.y].fields.get(new Coords(dest.x, dest.y))==map.length * map.height + 10){
+                throw new RuntimeException("Error with spawn point!\n");
+            }
+        }
     }
 
     public Object get(){

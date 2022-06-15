@@ -33,7 +33,6 @@ public class Board extends JComponent implements MouseInputListener {
     private String mapSource;
 
     public Board(int length, int height, int squareSize, String mapSource) {
-        simulation = new Simulation(this);
         showStaticField = false;
         size = squareSize;
         this.length = length;
@@ -51,6 +50,7 @@ public class Board extends JComponent implements MouseInputListener {
             ex.printStackTrace();
         }
         calculateStaticFields();
+        simulation = new Simulation(this);
     }
 
     public void clear() {

@@ -306,6 +306,5 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-//        System.exit(0);
     }
 }
