@@ -42,7 +42,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
         if(Program.debug)
             timer = new Timer(minDelay, this);
         else
-            timer = new Timer((maxDelay-minDelay)/5, this);
+            timer = new Timer((maxDelay-minDelay)/2, this);
 
         timer.stop();
         this.squareSize = squareSize;
